@@ -1,0 +1,262 @@
+================================================================================
+Css
+================================================================================
+.className p:hover[type=intpu]{
+  font-size: 10px;
+}
+--------------------------------------------------------------------------------
+================================================================================
+Variables
+================================================================================
+const selector = "p div"; 
+let color = '#fff';
+
+${selector}:hover {
+  color: ${color};
+  [this.name]: ${color};
+  ${this.name}: ${color};
+  ${this.name}: ${color};
+  test_${this.name}: ${color};
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (string
+        (string_fragment))))
+  (lexical_declaration
+    (variable_declarator
+      (identifier)
+      (string
+        (string_fragment))))
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (pseudo_class_selector
+          (tag_name
+            (template_substitution
+              (identifier)))
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (template_substitution
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (computed_property_name
+                (member_expression
+                  (this)
+                  (property_identifier))))
+            (jssPropertyValue
+              (template_substitution
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (template_substitution
+                (member_expression
+                  (this)
+                  (property_identifier))))
+            (jssPropertyValue
+              (template_substitution
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (template_substitution
+                (member_expression
+                  (this)
+                  (property_identifier))))
+            (jssPropertyValue
+              (template_substitution
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier))
+              (template_substitution
+                (member_expression
+                  (this)
+                  (property_identifier))))
+            (jssPropertyValue
+              (template_substitution
+                (identifier)))))))))
+
+================================================================================
+Imports
+================================================================================
+@import 'style.css';
+import _ from 'lodash';
+import { clone } from 'lodash/cone';
+
+--------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (css_import_statement
+      (string
+        (string_fragment))))
+  (import_statement
+    (import_clause
+      (identifier))
+    (string
+      (string_fragment)))
+  (import_statement
+    (import_clause
+      (named_imports
+        (import_specifier
+          (identifier))))
+    (string
+      (string_fragment))))
+
+================================================================================
+Nesting
+================================================================================
+.className {
+  color: #fff;
+  div p:hover {
+    -moz-color: #fff;
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))
+        (rule_set
+          (selectors
+            (pseudo_class_selector
+              (tag_name
+                (cssLiteral
+                  (jss_identifier)
+                  (jss_identifier)))
+              (class_name
+                (cssLiteral
+                  (jss_identifier)))))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (jss_identifier)))))))))))
+
+================================================================================
+Literals
+================================================================================
+.className {
+  color: #fff;
+  -moz-color: #fff;
+  --moz-color: #fff;
+  --moz_color: #fff;
+}
+
+--------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))))))
+
+================================================================================
+Jss Block Variables
+================================================================================
+const hidden = block { display: none; };
+
+.className {
+    font-size: 10px;
+    ...hidden;
+}
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Jss Block Variables with nested blocks
+===================================
+const clearfix = block {
+    display: block;
+    name: ${this.name};
+    ${this.name}:after {
+        content: ".";
+        display: table;
+        clear: both;
+    }
+};
+.className {
+    font-size: 10px;
+    ...clearfix;
+}
+.className2 {
+    font-size: 11px;
+    ...clearfix;
+}
+--------------------------------------------------------------------------------
