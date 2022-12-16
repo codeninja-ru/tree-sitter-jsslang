@@ -1,10 +1,46 @@
 ================================================================================
 Css
 ================================================================================
+@charset "utf-8";
 .className p:hover[type=intpu]{
   font-size: 10px;
 }
 --------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (charset_statement
+      (string
+        (string_fragment))))
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (attribute_selector
+          (pseudo_class_selector
+            (class_selector
+              (class_name
+                (cssLiteral
+                  (jss_identifier)
+                  (jss_identifier))))
+            (class_name
+              (cssLiteral
+                (jss_identifier))))
+          (attribute_name
+            (cssLiteral
+              (jss_identifier)))
+          (plain_value)))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)
+                (jss_identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (jss_identifier)))))))))
+
 ================================================================================
 Variables
 ================================================================================
@@ -230,7 +266,7 @@ Literals
 ================================================================================
 Jss Block Variables
 ================================================================================
-const hidden = block { display: none; };
+const hidden = @block { display: none; };
 
 .className {
     font-size: 10px;
@@ -239,10 +275,45 @@ const hidden = block { display: none; };
 
 --------------------------------------------------------------------------------
 
+(program
+  (stylessheetItem
+    (jssVariableStatement
+      (identifier)
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier))))))))
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)
+                (jss_identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssSpreadDefinition
+            (identifier)))))))
+
 ================================================================================
 Jss Block Variables with nested blocks
-===================================
-const clearfix = block {
+================================================================================
+const clearfix = @block {
     display: block;
     name: ${this.name};
     ${this.name}:after {
@@ -260,3 +331,364 @@ const clearfix = block {
     ...clearfix;
 }
 --------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (jssVariableStatement
+      (identifier)
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (template_substitution
+                (member_expression
+                  (this)
+                  (property_identifier))))))
+        (rule_set
+          (selectors
+            (pseudo_class_selector
+              (tag_name
+                (template_substitution
+                  (member_expression
+                    (this)
+                    (property_identifier))))
+              (class_name
+                (cssLiteral
+                  (jss_identifier)))))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (string
+                    (string_fragment)))))
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (jss_identifier)))))
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (jss_identifier))))))))))
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)
+                (jss_identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssSpreadDefinition
+            (identifier))))))
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)
+                (jss_identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssSpreadDefinition
+            (identifier)))))))
+
+================================================================================
+Media Queries
+================================================================================
+.component {
+    width: 300px;
+}
+
+@media (min-width: 768px) {
+    .component {
+        width: 600px;
+    }
+
+    @media (min-resolution: 192dpi) {
+        .component {
+            background-image: url(/img/retina2x.png);
+        }
+    }
+}
+
+@media (min-width: 1280px) {
+    .component {
+        width: 800px;
+    }
+}
+--------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (jss_identifier))))))))
+  (stylessheetItem
+    (media_statement
+      (feature_query
+        (feature_name)
+        (integer_value
+          (unit)))
+      (block
+        (rule_set
+          (selectors
+            (class_selector
+              (class_name
+                (cssLiteral
+                  (jss_identifier)))))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (jss_identifier)))))))
+        (media_statement
+          (feature_query
+            (feature_name)
+            (integer_value
+              (unit)))
+          (block
+            (rule_set
+              (selectors
+                (class_selector
+                  (class_name
+                    (cssLiteral
+                      (jss_identifier)))))
+              (block
+                (jssDeclaration
+                  (jssPropertyDefinition
+                    (jssPropertyName
+                      (cssLiteral
+                        (jss_identifier)
+                        (jss_identifier)))
+                    (jssPropertyValue
+                      (cssLiteral
+                        (jss_identifier))
+                      (parenthesized_value
+                        (plain_value))))))))))))
+  (stylessheetItem
+    (media_statement
+      (feature_query
+        (feature_name)
+        (integer_value
+          (unit)))
+      (block
+        (rule_set
+          (selectors
+            (class_selector
+              (class_name
+                (cssLiteral
+                  (jss_identifier)))))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (jss_identifier)))))))))))
+
+================================================================================
+Media Queries nested
+================================================================================
+.component {
+  width: 300px;
+  @media (min-width: 768px) {
+    width: 600px;
+    @media (min-resolution: 192dpi) {
+      background-image: url(/img/retina2x.png);
+    }
+  }
+  @media (min-width: 1280px) {
+    width: 800px;
+  }
+}
+--------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (jss_identifier)))))
+        (media_statement
+          (feature_query
+            (feature_name)
+            (integer_value
+              (unit)))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (jss_identifier)))))
+            (media_statement
+              (feature_query
+                (feature_name)
+                (integer_value
+                  (unit)))
+              (block
+                (jssDeclaration
+                  (jssPropertyDefinition
+                    (jssPropertyName
+                      (cssLiteral
+                        (jss_identifier)
+                        (jss_identifier)))
+                    (jssPropertyValue
+                      (cssLiteral
+                        (jss_identifier))
+                      (parenthesized_value
+                        (plain_value)))))))))
+        (media_statement
+          (feature_query
+            (feature_name)
+            (integer_value
+              (unit)))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (jss_identifier)))))))))))
+
+================================================================================
+Scoped variables
+================================================================================
+.className {
+  const size = new Px(10);
+  const block = @block {
+      display: block;
+  };
+  color: #fff;
+  size: ${size};
+  ...block;
+}
+--------------------------------------------------------------------------------
+
+(program
+  (stylessheetItem
+    (rule_set
+      (selectors
+        (class_selector
+          (class_name
+            (cssLiteral
+              (jss_identifier)))))
+      (block
+        (lexical_declaration
+          (variable_declarator
+            (identifier)
+            (new_expression
+              (identifier)
+              (arguments
+                (number)))))
+        (jssVariableStatement
+          (identifier)
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (jss_identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (jss_identifier)))))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (jss_identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (jss_identifier)))
+            (jssPropertyValue
+              (template_substitution
+                (identifier)))))
+        (jssDeclaration
+          (jssSpreadDefinition
+            (identifier)))))))

@@ -60,6 +60,13 @@ module.exports = grammar({
       $.jssVariableStatement,
       //startsWithDog,
       $.css_import_statement,
+      $.media_statement,
+
+      $.charset_statement,
+      $.namespace_statement,
+      $.keyframes_statement,
+      $.supports_statement,
+      $.at_rule
     ),
 
     jssVariableStatement: $ => seq(
@@ -67,7 +74,7 @@ module.exports = grammar({
       choice('var', 'const', 'let'),
       $.identifier,
       '=',
-      'block', //TODO noLineTerminatorHere
+      '@block', //TODO noLineTerminatorHere
       $.block,
       $._semicolon,
     ),
@@ -162,15 +169,22 @@ module.exports = grammar({
     ),
 
     _jssBlockStatmentItem: $ => choice(
-      $.jssDeclaration,
       $.rule_set,
+      $.jssDeclaration,
       //$.import_statement,
-      //$.media_statement,
+      $.media_statement,
+      $.jssVariableStatement,
       //$.charset_statement,
       //$.namespace_statement,
       //$.keyframes_statement,
       //$.supports_statement,
       //$.at_rule
+
+      //toRawNode(parseJsVarStatement),
+      $.lexical_declaration,
+      $.variable_declaration,
+      //toRawNode(functionExpression),
+      $.function_declaration,
     ),
 
     jssDeclaration: $ => seq(
@@ -198,6 +212,7 @@ module.exports = grammar({
       choice(
         $.template_substitution,
         $.cssLiteral,
+        $.number,
         $.string,
         seq('(', $.jssPropertyValue , ')'), //TODO expend on what is inside of ()
         $.parenthesized_value, //TODO can contain ${}
@@ -211,7 +226,16 @@ module.exports = grammar({
       ';'
     ),
 
+    media_statement: $ => seq(
+      '@media',
+      sep1(',', $._query),
+      $.block
+    ),
+
+
     css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
+
+    at_keyword: $ => /@[a-zA-Z-_]+/,
 
     _value: $ => prec(-1, choice(
       alias($.css_identifier, $.plain_value),
@@ -266,8 +290,14 @@ module.exports = grammar({
       ')'
     ),
     css_call_expression: $ => seq(
-      alias($.css_identifier, $.function_name),
-      $.arguments
+      alias($.css_identifier, $.css_function_name),
+      $.css_arguments
+    ),
+
+    css_arguments: $ => seq(
+      token.immediate('('),
+      sep(choice(',', ';'), repeat1($._value)),
+      ')'
     ),
 
     css_binary_expression: $ => prec.left(seq(
@@ -281,6 +311,54 @@ module.exports = grammar({
       $._value,
       sep(',', $._query),
       ';'
+    ),
+
+    charset_statement: $ => seq(
+      '@charset',
+      $._value,
+      ';'
+    ),
+
+    namespace_statement: $ => seq(
+      '@namespace',
+      optional(alias($.css_identifier, $.namespace_name)),
+      choice($.string, $.css_call_expression),
+      ';'
+    ),
+
+    keyframes_statement: $ => seq(
+      choice(
+        '@keyframes',
+        alias(/@[-a-z]+keyframes/, $.at_keyword)
+      ),
+      alias($.css_identifier, $.keyframes_name),
+      $.keyframe_block_list,
+    ),
+
+    keyframe_block_list: $ => seq(
+      '{',
+      repeat($.keyframe_block),
+      '}'
+    ),
+
+    keyframe_block: $ => seq(
+      choice($.from, $.to, $.integer_value),
+      $.block
+    ),
+
+    from: $ => 'from',
+    to: $ => 'to',
+
+    supports_statement: $ => seq(
+      '@supports',
+      $._query,
+      $.block
+    ),
+
+    at_rule: $ => seq(
+      $.at_keyword,
+      sep(',', $._query),
+      choice(';', $.block)
     ),
 
     // Media queries
