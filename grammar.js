@@ -25,6 +25,8 @@ module.exports = grammar({
 
     [$._jssSelector, $.jssPropertyName],
 
+    [$._jssSelector, $.at_rule],
+
     ...javascript.conflicts($),
   ],
   rules: {
@@ -356,7 +358,7 @@ module.exports = grammar({
     ),
 
     at_rule: $ => seq(
-      $.at_keyword,
+      $.cssLiteral,
       sep(',', $._query),
       choice(';', $.block)
     ),

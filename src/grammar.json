@@ -7915,7 +7915,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "at_keyword"
+          "name": "cssLiteral"
         },
         {
           "type": "CHOICE",
@@ -8179,6 +8179,10 @@
     [
       "_jssSelector",
       "jssPropertyName"
+    ],
+    [
+      "_jssSelector",
+      "at_rule"
     ],
     [
       "primary_expression",

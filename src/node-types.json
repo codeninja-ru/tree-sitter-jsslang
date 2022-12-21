@@ -630,15 +630,15 @@
       "required": true,
       "types": [
         {
-          "type": "at_keyword",
-          "named": true
-        },
-        {
           "type": "binary_query",
           "named": true
         },
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "cssLiteral",
           "named": true
         },
         {
