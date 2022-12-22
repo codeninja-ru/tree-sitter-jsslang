@@ -357,7 +357,7 @@ module.exports = grammar({
     at_rule: $ => seq(
       //$.at_keyword,
       '@',
-      $.cssLiteral,
+      cssLiteral,
       sep(',', $._query),
       choice(';', $.block)
     ),

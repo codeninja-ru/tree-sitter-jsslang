@@ -162,7 +162,7 @@ Nesting
 ================================================================================
 .className {
   color: #fff;
-  div p:hover {
+  ${this.name}--inner p:hover {
     -moz-color: #fff;
   }
 }
@@ -190,6 +190,10 @@ Nesting
           (selectors
             (pseudo_class_selector
               (tag_name
+                (template_substitution
+                  (member_expression
+                    (this)
+                    (property_identifier)))
                 (cssLiteral
                   (jss_identifier)
                   (jss_identifier)))
@@ -692,3 +696,23 @@ Scoped variables
         (jssDeclaration
           (jssSpreadDefinition
             (identifier)))))))
+
+================================================================================
+At Rules
+================================================================================
+@font-face {
+  font-family: "Open Sans";
+  src: url("/a") format("woff2"), url("/b/c") format("woff");
+}
+.className {
+    width: 100px;
+    const value = '#fff';
+    @media screen {
+        width: 200px;
+            @media print {
+                width: ${Dimentions.fromString(this.parent.styles.width).add(100)};
+                color: ${value};
+        }
+    }
+}
+--------------------------------------------------------------------------------

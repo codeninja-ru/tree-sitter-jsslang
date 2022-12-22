@@ -658,6 +658,10 @@
           "named": true
         },
         {
+          "type": "template_substitution",
+          "named": true
+        },
+        {
           "type": "unary_query",
           "named": true
         }
