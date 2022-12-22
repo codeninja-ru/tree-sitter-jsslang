@@ -179,8 +179,8 @@ module.exports = grammar({
       //$.charset_statement,
       //$.namespace_statement,
       //$.keyframes_statement,
-      //$.supports_statement,
-      //$.at_rule
+      $.supports_statement,
+      $.at_rule,
 
       //toRawNode(parseJsVarStatement),
       $.lexical_declaration,
@@ -218,7 +218,7 @@ module.exports = grammar({
         $.string,
         seq('(', $.jssPropertyValue , ')'), //TODO expend on what is inside of ()
         $.parenthesized_value, //TODO can contain ${}
-        '+', '@', '!', '/', '.', '#', '%', ','
+        '+', '!', '/', '.', '#', '%', ','
       )
     ),
 
@@ -237,7 +237,6 @@ module.exports = grammar({
 
     css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
 
-    at_keyword: $ => /@[a-zA-Z-_]+/,
 
     _value: $ => prec(-1, choice(
       alias($.css_identifier, $.plain_value),
@@ -358,6 +357,8 @@ module.exports = grammar({
     ),
 
     at_rule: $ => seq(
+      //$.at_keyword,
+      '@',
       $.cssLiteral,
       sep(',', $._query),
       choice(';', $.block)

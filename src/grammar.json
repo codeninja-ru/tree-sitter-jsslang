@@ -7051,6 +7051,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "supports_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_rule"
+        },
+        {
+          "type": "SYMBOL",
           "name": "lexical_declaration"
         },
         {
@@ -7171,10 +7179,6 @@
           },
           {
             "type": "STRING",
-            "value": "@"
-          },
-          {
-            "type": "STRING",
             "value": "!"
           },
           {
@@ -7258,10 +7262,6 @@
     "css_identifier": {
       "type": "PATTERN",
       "value": "(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*"
-    },
-    "at_keyword": {
-      "type": "PATTERN",
-      "value": "@[a-zA-Z-_]+"
     },
     "_value": {
       "type": "PREC",
@@ -7913,6 +7913,10 @@
     "at_rule": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
         {
           "type": "SYMBOL",
           "name": "cssLiteral"

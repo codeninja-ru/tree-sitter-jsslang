@@ -1073,6 +1073,10 @@
       "required": false,
       "types": [
         {
+          "type": "at_rule",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -1094,6 +1098,10 @@
         },
         {
           "type": "rule_set",
+          "named": true
+        },
+        {
+          "type": "supports_statement",
           "named": true
         },
         {
