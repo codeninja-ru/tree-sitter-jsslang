@@ -23,7 +23,7 @@ deps:
 	wget https://codeload.github.com/tree-sitter/tree-sitter-css/tar.gz/master -O - | tar -xzv -C ./test/css --strip=2 "tree-sitter-css-master/corpus"
 	find ./test/css -type f -exec bash -c 'mv $$0 $${0%/*}/css_$${0##*/}' {} \;
 	find ./test/javascript -type f -exec bash -c 'mv $$0 $${0%/*}/javascript_$${0##*/}' {} \;
-	cp -r ./test/javascript/* ./test/.
-	cp -r ./test/css/* ./test/corpus/.
+	cp -r ./test/javascript ./test/corpus/.
+	cp -r ./test/css ./test/corpus/.
 	rm -rf ./test/javascript
 	rm -rf ./test/css

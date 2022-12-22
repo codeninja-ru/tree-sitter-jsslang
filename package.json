@@ -21,5 +21,14 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.20.7"
-  }
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.jss",
+      "file-types": [
+        "jss"
+      ],
+      "injection-regex": "^(jss|jsslang)$"
+    }
+  ]
 }

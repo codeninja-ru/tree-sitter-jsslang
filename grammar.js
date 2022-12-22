@@ -25,8 +25,6 @@ module.exports = grammar({
 
     [$._jssSelector, $.jssPropertyName],
 
-    [$._jssSelector, $.at_rule],
-
     ...javascript.conflicts($),
   ],
   rules: {
