@@ -25,7 +25,23 @@ module.exports = grammar({
 
     [$._jssSelector, $.jssPropertyName],
 
-    ...javascript.conflicts($),
+    [$.simpleSelector, $.jssPropertyName],
+
+    //...javascript.conflicts($),
+    [$.primary_expression, $.arrow_function],
+    [$.primary_expression, $._property_name],
+    [$.labeled_statement, $._property_name],
+    [$.object, $.object_pattern],
+    [$.primary_expression, $.method_definition],
+    [$.primary_expression, $.arrow_function, $._property_name],
+    [$.primary_expression, $.pattern],
+    [$.assignment_expression, $.pattern],
+    [$.array, $.array_pattern],
+    [$.primary_expression, $.rest_pattern],
+    [$._for_header, $.primary_expression],
+    [$.object_assignment_pattern, $.assignment_expression],
+    [$.array, $.computed_property_name],
+    [$._initializer, $.binary_expression],
   ],
   rules: {
     ...javascript.rules,
@@ -93,21 +109,82 @@ module.exports = grammar({
       ),
     ),
 
-    _jssSelector: $ => choice(
-      $.universal_selector,
-      alias($._jssIdent, $.tag_name),
-      $.class_selector,
-      $.nesting_selector,
-      $.pseudo_class_selector,
-      $.pseudo_element_selector,
-      $.id_selector,
-      $.attribute_selector,
-      $.string,
-      $.child_selector,
-      $.descendant_selector,
-      $.sibling_selector,
-      $.adjacent_sibling_selector
+    //_jssSelector: $ => choice(
+    //  $.universal_selector,
+    //  alias($._jssIdent, $.tag_name),
+    //  $.class_selector,
+    //  $.nesting_selector,
+    //  $.pseudo_class_selector,
+    //  $.pseudo_element_selector,
+    //  $.id_selector,
+    //  $.attribute_selector,
+    //  $.string,
+    //  $.child_selector,
+    //  $.descendant_selector,
+    //  $.sibling_selector,
+    //  $.adjacent_sibling_selector
+    //),
+
+    // jss way declaration
+
+    _jssSelector: $ => prec.right(seq(
+      $.simpleSelector,
+      repeat(
+        choice($.combinator, $.simpleSelector),
+      )
+    )),
+
+    simpleSelector: $ => prec.right(seq(
+      choice(
+        seq(
+          alias(
+            choice($._jssIdent, '*'),
+            $.elementName,
+          ),
+          repeat($.rest),
+        ),
+        repeat1($.rest),
+      ),
+    )),
+
+    combinator: $ => choice(
+      '+', '>', '~'
     ),
+
+    rest: $ => prec.right(choice(
+      alias(
+        seq('#', $.cssLiteral),
+        $.hash
+      ),
+      alias(
+        seq('.', $._jssIdent),
+        $.cssClass
+      ),
+      alias(
+        seq(
+          '[',
+          alias($._jssIdent, $.attribute_name),
+          optional(seq(
+            choice('=', '~=', '^=', '|=', '*=', '$='),
+            $._value
+          )),
+          ']'
+        ),
+        $.attrib
+      ),
+      alias(
+        seq(
+          choice(':', '::'),
+          choice(
+            $._jssIdent,
+            optional(alias($.pseudo_class_arguments, $.arguments))
+          )
+        ),
+        $.pseudo,
+      )
+    )),
+
+    // END jss way ends
 
     nesting_selector: $ => '&',
 
