@@ -7910,6 +7910,10 @@
         }
       ]
     },
+    "at_keyword": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z-_]+"
+    },
     "at_rule": {
       "type": "SEQ",
       "members": [
@@ -7919,7 +7923,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_jssIdent"
+          "name": "at_keyword"
         },
         {
           "type": "CHOICE",

@@ -354,10 +354,11 @@ module.exports = grammar({
       $.block
     ),
 
+    at_keyword: $ => /[a-zA-Z-_]+/,
+
     at_rule: $ => seq(
-      //$.at_keyword,
       '@',
-      cssLiteral,
+      $.at_keyword,
       sep(',', $._query),
       choice(';', $.block)
     ),
