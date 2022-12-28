@@ -67,6 +67,37 @@ static bool scan_whitespace_and_comments(TSLexer *lexer) {
       } else {
         return false;
       }
+    } else if (lexer->lookahead == '<') {
+      skip(lexer);
+
+      if (lexer->lookahead == '-') {
+        skip(lexer);
+
+        if (lexer->lookahead == '-') {
+          skip(lexer);
+          while (lexer->lookahead != 0) {
+            if (lexer->lookahead == '-') {
+              skip(lexer);
+              if (lexer->lookahead == '-') {
+                skip(lexer);
+                if (lexer->lookahead == '>') {
+                  skip(lexer);
+                  break;
+                }
+              } else {
+                skip(lexer);
+              }
+            } else {
+              skip(lexer);
+            }
+        }
+
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     } else {
       return true;
     }

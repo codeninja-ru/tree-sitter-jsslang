@@ -13,35 +13,21 @@ module.exports = grammar({
     $._descendant_operator, //TODO
   ],
   conflicts: $ => [
-    [$._jssStatement, $.statement],
     [$.unary_expression, $.cssLiteral],
+    [$.primary_expression, $._jssSelector],
+    [$._jssSelector, $.jssPropertyName],
+
     [$.primary_expression, $.cssLiteral],
     [$.labeled_statement, $.cssLiteral],
     [$.assignment_expression, $.pattern, $.cssLiteral],
     [$.primary_expression, $.pattern, $.cssLiteral],
     [$._augmented_assignment_lhs, $.cssLiteral],
-    [$.primary_expression, $._jssSelector],
     [$.assignment_expression, $.cssLiteral],
 
-    [$._jssSelector, $.jssPropertyName],
-
-    [$.simpleSelector, $.jssPropertyName],
-
-    //...javascript.conflicts($),
-    [$.primary_expression, $.arrow_function],
-    [$.primary_expression, $._property_name],
-    [$.labeled_statement, $._property_name],
-    [$.object, $.object_pattern],
-    [$.primary_expression, $.method_definition],
-    [$.primary_expression, $.arrow_function, $._property_name],
-    [$.primary_expression, $.pattern],
-    [$.assignment_expression, $.pattern],
-    [$.array, $.array_pattern],
-    [$.primary_expression, $.rest_pattern],
-    [$._for_header, $.primary_expression],
-    [$.object_assignment_pattern, $.assignment_expression],
-    [$.array, $.computed_property_name],
-    [$._initializer, $.binary_expression],
+    ...javascript.conflicts($),
+  ],
+  precedences: $ => [
+    ...javascript.precedences($),
   ],
   rules: {
     ...javascript.rules,
@@ -56,15 +42,16 @@ module.exports = grammar({
       $.statement,
     ),
 
-    jss_identifier: $ => { // js identifier without $
-      const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/
-      const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/
+    identifier: $ => { // js identifier without $
+      // NOTE: $ symbol in identifier conflicts with string templeates ${}
+      const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
+      const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
       return token(seq(alpha, repeat(alphanumeric)));
     },
 
     cssLiteral: $ => prec.right(repeat1(
       choice(
-        $.jss_identifier,
+        $.identifier,
         '-', //TODO no spacesuhere
       ),
     )),
@@ -109,25 +96,25 @@ module.exports = grammar({
       ),
     ),
 
-    //_jssSelector: $ => choice(
-    //  $.universal_selector,
-    //  alias($._jssIdent, $.tag_name),
-    //  $.class_selector,
-    //  $.nesting_selector,
-    //  $.pseudo_class_selector,
-    //  $.pseudo_element_selector,
-    //  $.id_selector,
-    //  $.attribute_selector,
-    //  $.string,
-    //  $.child_selector,
-    //  $.descendant_selector,
-    //  $.sibling_selector,
-    //  $.adjacent_sibling_selector
-    //),
+    _jssSelector: $ => choice(
+      $.universal_selector,
+      alias($._jssIdent, $.tag_name),
+      $.class_selector,
+      $.nesting_selector,
+      $.pseudo_class_selector,
+      $.pseudo_element_selector,
+      $.id_selector,
+      $.attribute_selector,
+      $.string,
+      $.child_selector,
+      $.descendant_selector,
+      $.sibling_selector,
+      $.adjacent_sibling_selector
+    ),
 
     // jss way declaration
 
-    _jssSelector: $ => prec.right(seq(
+    _jssSelector2: $ => prec.right(seq(
       $.simpleSelector,
       repeat(
         choice($.combinator, $.simpleSelector),

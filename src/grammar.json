@@ -5624,13 +5624,13 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[^\\x00-\\x1F\\s\\p{Zs}0-9:;`\"'@#.,|^&<=>+\\-*/\\\\%?!~()\\[\\]{}\\uFEFF\\u2060\\u200B]|\\\\u[0-9a-fA-F]{4}|\\\\u\\{[0-9a-fA-F]+\\}"
+            "value": "[^\\x00-\\x1F\\s\\p{Zs}0-9:$;`\"'@#.,|^&<=>+\\-*/\\\\%?!~()\\[\\]{}\\uFEFF\\u2060\\u200B]|\\\\u[0-9a-fA-F]{4}|\\\\u\\{[0-9a-fA-F]+\\}"
           },
           {
             "type": "REPEAT",
             "content": {
               "type": "PATTERN",
-              "value": "[^\\x00-\\x1F\\s\\p{Zs}:;`\"'@#.,|^&<=>+\\-*/\\\\%?!~()\\[\\]{}\\uFEFF\\u2060\\u200B]|\\\\u[0-9a-fA-F]{4}|\\\\u\\{[0-9a-fA-F]+\\}"
+              "value": "[^\\x00-\\x1F\\s\\p{Zs}:$;`\"'@#.,|^&<=>+\\-*/\\\\%?!~()\\[\\]{}\\uFEFF\\u2060\\u200B]|\\\\u[0-9a-fA-F]{4}|\\\\u\\{[0-9a-fA-F]+\\}"
             }
           }
         ]
@@ -6374,25 +6374,6 @@
         }
       ]
     },
-    "jss_identifier": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "[^\\x00-\\x1F\\s\\p{Zs}0-9:$;`\"'@#.,|^&<=>+\\-*/\\\\%?!~()\\[\\]{}\\uFEFF\\u2060\\u200B]|\\\\u[0-9a-fA-F]{4}|\\\\u\\{[0-9a-fA-F]+\\}"
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "PATTERN",
-              "value": "[^\\x00-\\x1F\\s\\p{Zs}:$;`\"'@#.,|^&<=>+\\-*/\\\\%?!~()\\[\\]{}\\uFEFF\\u2060\\u200B]|\\\\u[0-9a-fA-F]{4}|\\\\u\\{[0-9a-fA-F]+\\}"
-            }
-          }
-        ]
-      }
-    },
     "cssLiteral": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -6403,7 +6384,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "jss_identifier"
+              "name": "identifier"
             },
             {
               "type": "STRING",
@@ -6563,6 +6544,68 @@
       }
     },
     "_jssSelector": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "universal_selector"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_jssIdent"
+          },
+          "named": true,
+          "value": "tag_name"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "class_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "nesting_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pseudo_class_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pseudo_element_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "id_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "attribute_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "child_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "descendant_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sibling_selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "adjacent_sibling_selector"
+        }
+      ]
+    },
+    "_jssSelector2": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -8349,12 +8392,16 @@
   ],
   "conflicts": [
     [
-      "_jssStatement",
-      "statement"
-    ],
-    [
       "unary_expression",
       "cssLiteral"
+    ],
+    [
+      "primary_expression",
+      "_jssSelector"
+    ],
+    [
+      "_jssSelector",
+      "jssPropertyName"
     ],
     [
       "primary_expression",
@@ -8379,20 +8426,17 @@
       "cssLiteral"
     ],
     [
-      "primary_expression",
-      "_jssSelector"
-    ],
-    [
       "assignment_expression",
       "cssLiteral"
     ],
     [
-      "_jssSelector",
-      "jssPropertyName"
+      "primary_expression",
+      "_property_name"
     ],
     [
-      "simpleSelector",
-      "jssPropertyName"
+      "primary_expression",
+      "_property_name",
+      "arrow_function"
     ],
     [
       "primary_expression",
@@ -8400,56 +8444,47 @@
     ],
     [
       "primary_expression",
-      "_property_name"
-    ],
-    [
-      "labeled_statement",
-      "_property_name"
-    ],
-    [
-      "object",
-      "object_pattern"
-    ],
-    [
-      "primary_expression",
       "method_definition"
-    ],
-    [
-      "primary_expression",
-      "arrow_function",
-      "_property_name"
-    ],
-    [
-      "primary_expression",
-      "pattern"
-    ],
-    [
-      "assignment_expression",
-      "pattern"
-    ],
-    [
-      "array",
-      "array_pattern"
     ],
     [
       "primary_expression",
       "rest_pattern"
     ],
     [
-      "_for_header",
-      "primary_expression"
+      "primary_expression",
+      "pattern"
     ],
     [
-      "object_assignment_pattern",
-      "assignment_expression"
+      "primary_expression",
+      "_for_header"
     ],
     [
       "array",
-      "computed_property_name"
+      "array_pattern"
     ],
     [
-      "_initializer",
-      "binary_expression"
+      "object",
+      "object_pattern"
+    ],
+    [
+      "assignment_expression",
+      "pattern"
+    ],
+    [
+      "assignment_expression",
+      "object_assignment_pattern"
+    ],
+    [
+      "labeled_statement",
+      "_property_name"
+    ],
+    [
+      "computed_property_name",
+      "array"
+    ],
+    [
+      "binary_expression",
+      "_initializer"
     ]
   ],
   "precedences": [
