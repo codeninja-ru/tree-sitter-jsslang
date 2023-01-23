@@ -27,3 +27,6 @@ deps:
 	cp -r ./test/css ./test/corpus/.
 	rm -rf ./test/javascript
 	rm -rf ./test/css
+
+parse: gen
+	$(TREE_SITTER) parse -d /tmp/test.jss

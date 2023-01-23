@@ -1,9 +1,9 @@
 module.exports = {
-  externals: $ => [
-    $._automatic_semicolon,
-    $._template_chars,
-    $._ternary_qmark,
-  ],
+  //externals: $ => [
+  //  $._automatic_semicolon,
+  //  $._template_chars,
+  //  $._ternary_qmark,
+  //],
 
   extras: $ => [
     $.comment,

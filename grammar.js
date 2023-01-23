@@ -9,6 +9,8 @@ module.exports = grammar({
     $._automatic_semicolon,
     $._template_chars,
     $._ternary_qmark,
+    $.identifier,
+    //$.css_identifier,
 
     $._descendant_operator, //TODO
   ],
@@ -23,6 +25,9 @@ module.exports = grammar({
     [$.primary_expression, $.pattern, $.cssLiteral],
     [$._augmented_assignment_lhs, $.cssLiteral],
     [$.assignment_expression, $.cssLiteral],
+    [$.decorator_call_expression, $.cssLiteral],
+
+    [$.simpleSelector, $.jssPropertyName],
 
     ...javascript.conflicts($),
   ],
@@ -48,11 +53,16 @@ module.exports = grammar({
       const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
       return token(seq(alpha, repeat(alphanumeric)));
     },
+    //identifier: $ => choice(
+    //  $.identifier_without_$,
+    //  $.identifier_with_$,
+    //),
 
+    //cssLiteral: $ => $.css_identifier,
     cssLiteral: $ => prec.right(repeat1(
       choice(
         $.identifier,
-        '-', //TODO no spacesuhere
+        '-', //TODO withoud spaces
       ),
     )),
 
@@ -96,7 +106,7 @@ module.exports = grammar({
       ),
     ),
 
-    _jssSelector: $ => choice(
+    _jssSelector2: $ => choice(
       $.universal_selector,
       alias($._jssIdent, $.tag_name),
       $.class_selector,
@@ -114,10 +124,13 @@ module.exports = grammar({
 
     // jss way declaration
 
-    _jssSelector2: $ => prec.right(seq(
+    _jssSelector: $ => prec.right(seq(
       $.simpleSelector,
       repeat(
-        choice($.combinator, $.simpleSelector),
+        seq(
+          optional($.combinator),
+          $.simpleSelector,
+        )
       )
     )),
 
@@ -215,7 +228,8 @@ module.exports = grammar({
 
     child_selector: $ => prec.left(seq($._jssSelector, '>', $._jssSelector)),
 
-    descendant_selector: $ => prec.left(seq($._jssSelector, $._descendant_operator, $._jssSelector)),
+    //descendant_selector: $ => prec.left(seq($._jssSelector, $._descendant_operator, $._jssSelector)),
+    descendant_selector: $ => repeat1($._jssSelector),
 
     sibling_selector: $ => prec.left(seq($._jssSelector, '~', $._jssSelector)),
 
@@ -298,7 +312,6 @@ module.exports = grammar({
 
 
     css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
-
 
     _value: $ => prec(-1, choice(
       alias($.css_identifier, $.plain_value),
@@ -422,7 +435,8 @@ module.exports = grammar({
 
     at_rule: $ => seq(
       '@',
-      $.at_keyword,
+      //$.at_keyword,
+      $.cssLiteral,
       sep(',', $._query),
       choice(';', $.block)
     ),

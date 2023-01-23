@@ -71,7 +71,7 @@ ${selector}:hover {
   color: ${color};
   [this.name]: ${color};
   ${this.name}: ${color};
-  ${this.name}: ${color};
+  ${this.name}_test: ${color};
   test_${this.name}: ${color};
 }
 
@@ -846,3 +846,13 @@ At Rules
                     (jssPropertyValue
                       (template_substitution
                         (identifier)))))))))))))
+
+================================================================================
+Comments
+================================================================================
+// one line comment
+/*
+ a multi-line comment
+*/
+// <!-- a html style comment --> html style comment has to be defined in scanner.c
+--------------------------------------------------------------------------------

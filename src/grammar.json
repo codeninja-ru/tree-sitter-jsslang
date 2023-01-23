@@ -6543,7 +6543,7 @@
         ]
       }
     },
-    "_jssSelector": {
+    "_jssSelector2": {
       "type": "CHOICE",
       "members": [
         {
@@ -6605,7 +6605,7 @@
         }
       ]
     },
-    "_jssSelector2": {
+    "_jssSelector": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -6618,11 +6618,19 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "CHOICE",
+              "type": "SEQ",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "combinator"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "combinator"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 },
                 {
                   "type": "SYMBOL",
@@ -7120,24 +7128,10 @@
       }
     },
     "descendant_selector": {
-      "type": "PREC_LEFT",
-      "value": 0,
+      "type": "REPEAT1",
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_jssSelector"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_descendant_operator"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_jssSelector"
-          }
-        ]
+        "type": "SYMBOL",
+        "name": "_jssSelector"
       }
     },
     "sibling_selector": {
@@ -8168,7 +8162,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "at_keyword"
+          "name": "cssLiteral"
         },
         {
           "type": "CHOICE",
@@ -8430,6 +8424,14 @@
       "cssLiteral"
     ],
     [
+      "decorator_call_expression",
+      "cssLiteral"
+    ],
+    [
+      "simpleSelector",
+      "jssPropertyName"
+    ],
+    [
       "primary_expression",
       "_property_name"
     ],
@@ -8651,6 +8653,10 @@
     {
       "type": "SYMBOL",
       "name": "_ternary_qmark"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "identifier"
     },
     {
       "type": "SYMBOL",
