@@ -11,8 +11,6 @@ module.exports = grammar({
     $._ternary_qmark,
     $.identifier,
     //$.css_identifier,
-
-    $._descendant_operator, //TODO
   ],
   conflicts: $ => [
     [$.unary_expression, $.cssLiteral],
@@ -28,6 +26,32 @@ module.exports = grammar({
     [$.decorator_call_expression, $.cssLiteral],
 
     [$.simpleSelector, $.jssPropertyName],
+
+    // jsx fix
+    [$.jsx_opening_element, $.jsx_self_closing_element, $.jsx_identifier],
+    [$.jsx_namespace_name, $.jsx_identifier],
+    [$.jsx_opening_element, $.jsx_identifier],
+    [$.jsx_self_closing_element, $.jsx_identifier],
+    [$.jsx_attribute, $.jsx_identifier],
+    [$.jsx_closing_element, $.jsx_identifier],
+
+    // css_identifier fix
+    [$.simpleSelector, $.css_identifier],
+    [$.pseudo_class_arguments, $.css_binary_expression],
+    [$.cssLiteral, $.css_binary_expression],
+    [$.css_arguments, $.css_binary_expression],
+    [$.css_binary_expression, $.feature_query],
+    [$.jssPropertyValue, $.css_identifier],
+
+    //jsx fix
+    [$.jsx_opening_element, $.jsx_identifier, $.jsx_self_closing_element],
+    [$.jsx_identifier, $.jsx_namespace_name],
+    [$.jsx_opening_element, $.jsx_identifier],
+    [$.jsx_identifier, $.jsx_self_closing_element],
+    [$.jsx_identifier, $.jsx_attribute],
+    [$.jsx_identifier, $.jsx_closing_element],
+    [$.jsx_opening_element],
+
 
     ...javascript.conflicts($),
   ],
@@ -47,16 +71,20 @@ module.exports = grammar({
       $.statement,
     ),
 
-    identifier: $ => { // js identifier without $
-      // NOTE: $ symbol in identifier conflicts with string templeates ${}
-      const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
-      const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
-      return token(seq(alpha, repeat(alphanumeric)));
-    },
+    //identifier: $ => { // js identifier without $
+    //  // NOTE: $ symbol in identifier conflicts with string templeates ${}
+    //  const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
+    //  const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
+    //  return token(seq(alpha, repeat(alphanumeric)));
+    //},
     //identifier: $ => choice(
     //  $.identifier_without_$,
     //  $.identifier_with_$,
     //),
+    private_property_identifier: $ => {
+      return seq('#', $.identifier);
+    },
+
 
     //cssLiteral: $ => $.css_identifier,
     cssLiteral: $ => prec.right(repeat1(
@@ -106,21 +134,21 @@ module.exports = grammar({
       ),
     ),
 
-    _jssSelector2: $ => choice(
-      $.universal_selector,
-      alias($._jssIdent, $.tag_name),
-      $.class_selector,
-      $.nesting_selector,
-      $.pseudo_class_selector,
-      $.pseudo_element_selector,
-      $.id_selector,
-      $.attribute_selector,
-      $.string,
-      $.child_selector,
-      $.descendant_selector,
-      $.sibling_selector,
-      $.adjacent_sibling_selector
-    ),
+    //_jssSelector2: $ => choice(
+    //  $.universal_selector,
+    //  alias($._jssIdent, $.tag_name),
+    //  $.class_selector,
+    //  $.nesting_selector,
+    //  $.pseudo_class_selector,
+    //  $.pseudo_element_selector,
+    //  $.id_selector,
+    //  $.attribute_selector,
+    //  $.string,
+    //  $.child_selector,
+    //  $.descendant_selector,
+    //  $.sibling_selector,
+    //  $.adjacent_sibling_selector
+    //),
 
     // jss way declaration
 
@@ -229,7 +257,7 @@ module.exports = grammar({
     child_selector: $ => prec.left(seq($._jssSelector, '>', $._jssSelector)),
 
     //descendant_selector: $ => prec.left(seq($._jssSelector, $._descendant_operator, $._jssSelector)),
-    descendant_selector: $ => repeat1($._jssSelector),
+    //descendant_selector: $ => repeat1($._jssSelector),
 
     sibling_selector: $ => prec.left(seq($._jssSelector, '~', $._jssSelector)),
 
@@ -311,7 +339,8 @@ module.exports = grammar({
     ),
 
 
-    css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
+    //css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
+    css_identifier: $ => $.cssLiteral,
 
     _value: $ => prec(-1, choice(
       alias($.css_identifier, $.plain_value),
@@ -483,6 +512,12 @@ module.exports = grammar({
       $._jssSelector,
       ')'
     ),
+
+
+    // jsx fix
+    //jsx_identifier: $ => /[a-zA-Z_$][a-zA-Z\d_$]*-[a-zA-Z\d_$\-]*/,
+    jsx_identifier: $ => seq($.identifier, optinal(seq('-', $.identifier))),
+
 
   },
 });

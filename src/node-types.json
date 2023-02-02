@@ -306,25 +306,6 @@
     ]
   },
   {
-    "type": "adjacent_sibling_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "arguments",
     "named": true,
     "fields": {},
@@ -637,61 +618,6 @@
         },
         {
           "type": "template_substitution",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "attribute_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_name",
-          "named": true
-        },
-        {
-          "type": "color_value",
-          "named": true
-        },
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "css_binary_expression",
-          "named": true
-        },
-        {
-          "type": "css_call_expression",
-          "named": true
-        },
-        {
-          "type": "float_value",
-          "named": true
-        },
-        {
-          "type": "integer_value",
-          "named": true
-        },
-        {
-          "type": "parenthesized_value",
-          "named": true
-        },
-        {
-          "type": "plain_value",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
-          "named": true
-        },
-        {
-          "type": "string",
           "named": true
         }
       ]
@@ -1164,25 +1090,6 @@
     }
   },
   {
-    "type": "child_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "class",
     "named": true,
     "fields": {
@@ -1333,29 +1240,6 @@
         },
         {
           "type": "template_substitution",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "class_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "class_name",
-          "named": true
-        },
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
           "named": true
         }
       ]
@@ -1542,6 +1426,21 @@
     }
   },
   {
+    "type": "css_function_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "css_import_statement",
     "named": true,
     "fields": {},
@@ -1631,25 +1530,6 @@
         },
         {
           "type": "member_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "descendant_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
           "named": true
         }
       ]
@@ -1835,6 +1715,21 @@
         },
         {
           "type": "sequence_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "feature_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
           "named": true
         }
       ]
@@ -2381,23 +2276,15 @@
     }
   },
   {
-    "type": "id_selector",
+    "type": "identifier",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "id_name",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -2975,6 +2862,21 @@
     }
   },
   {
+    "type": "keyframes_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "keyframes_statement",
     "named": true,
     "fields": {},
@@ -2992,6 +2894,21 @@
         },
         {
           "type": "keyframes_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "keyword_query",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
           "named": true
         }
       ]
@@ -3245,6 +3162,21 @@
     }
   },
   {
+    "type": "namespace_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "namespace_statement",
     "named": true,
     "fields": {},
@@ -3285,11 +3217,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "nesting_selector",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "new_expression",
@@ -3595,6 +3522,36 @@
     }
   },
   {
+    "type": "plain_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "private_property_identifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "program",
     "named": true,
     "fields": {},
@@ -3631,56 +3588,6 @@
         },
         {
           "type": "template_substitution",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "pseudo_class_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "arguments",
-          "named": true
-        },
-        {
-          "type": "class_name",
-          "named": true
-        },
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "pseudo_element_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
-          "named": true
-        },
-        {
-          "type": "tag_name",
           "named": true
         }
       ]
@@ -3886,25 +3793,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "sibling_selector",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "combinator",
-          "named": true
-        },
-        {
-          "type": "simpleSelector",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -4426,11 +4314,6 @@
     }
   },
   {
-    "type": "universal_selector",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "update_expression",
     "named": true,
     "fields": {
@@ -4889,10 +4772,6 @@
     "named": false
   },
   {
-    "type": "css_function_name",
-    "named": true
-  },
-  {
     "type": "debugger",
     "named": false
   },
@@ -4929,10 +4808,6 @@
     "named": true
   },
   {
-    "type": "feature_name",
-    "named": true
-  },
-  {
     "type": "finally",
     "named": false
   },
@@ -4957,10 +4832,6 @@
     "named": true
   },
   {
-    "type": "identifier",
-    "named": true
-  },
-  {
     "type": "if",
     "named": false
   },
@@ -4981,20 +4852,8 @@
     "named": true
   },
   {
-    "type": "keyframes_name",
-    "named": true
-  },
-  {
-    "type": "keyword_query",
-    "named": true
-  },
-  {
     "type": "let",
     "named": false
-  },
-  {
-    "type": "namespace_name",
-    "named": true
   },
   {
     "type": "new",
@@ -5027,14 +4886,6 @@
   {
     "type": "or",
     "named": false
-  },
-  {
-    "type": "plain_value",
-    "named": true
-  },
-  {
-    "type": "private_property_identifier",
-    "named": true
   },
   {
     "type": "property_identifier",

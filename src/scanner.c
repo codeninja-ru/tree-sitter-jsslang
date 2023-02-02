@@ -7,7 +7,6 @@ enum TokenType {
   TEMPLATE_CHARS,
   TERNARY_QMARK,
   IDENTIFIER,
-  DESCENDANT_OPERATOR,
   //CSS_IDENTIFIER, // identifier without $
 };
 
@@ -19,8 +18,8 @@ void tree_sitter_jsslang_external_scanner_reset(void *p) {}
 unsigned tree_sitter_jsslang_external_scanner_serialize(void *p, char *buffer) { return 0; }
 void tree_sitter_jsslang_external_scanner_deserialize(void *p, const char *b, unsigned n) {}
 
-static void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
-static void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
+static void advance(TSLexer *lexer) { wprintf(L"advance\n"); lexer->advance(lexer, false); }
+static void skip(TSLexer *lexer) { wprintf(L"skip\n"); lexer->advance(lexer, true); }
 
 static bool is_alpha(int32_t lookahead) {
   return (lookahead >= 'a' && lookahead <= 'z') ||
@@ -69,10 +68,23 @@ const int32_t KEYWORDS[][MAX_KEYWORD_SIZE] = {
   L"return",
   L"new",
   L"for",
+  L"while",
+  L"do",
   L"true",
   L"false",
   L"await",
   L"function",
+  L"class",
+  L"export",
+  L"break",
+  L"switch",
+  L"case",
+  L"arguments",
+  L"yield",
+  L"delete",
+  L"typeof",
+  L"with",
+  L"debugger",
 };
 
 static bool is_keyword(int32_t *token) {
@@ -111,19 +123,25 @@ static bool scan_identifier(TSLexer *lexer) {
   int token_length = 0;
   int32_t token[MAX_KEYWORD_SIZE] = {};
 
-  //wprintf(L"scan_identtifier: enter lookahead = %lc\n", lexer->lookahead);
-  //while (iswspace(lexer->lookahead)) {
-  //  skip(lexer);
+  wprintf(L"scan_identifier: enter lookahead = %lc (%d)\n", lexer->lookahead, lexer->lookahead);
+
+  //if (lexer->is_at_included_range_start(lexer)) {
+  //  while(iswspace(lexer->lookahead)) {
+  //    skip(lexer);
+  //  }
   //}
+  while(iswspace(lexer->lookahead)) {
+    skip(lexer);
+  }
 
   if (is_alpha(lexer->lookahead) ||
       is_symbol(lexer->lookahead)) {
     lexer->mark_end(lexer);
 
-    //wprintf(L"scan_identtifier: the first symbol lookahead = %lc\n", lexer->lookahead);
+    wprintf(L"scan_identifier: the first symbol lookahead = %lc\n", lexer->lookahead);
 
     if (lexer->lookahead == '$') {
-      //wprintf(L"scan_identtifier: the first symbol, $ found lookahead = %lc\n", lexer->lookahead);
+      wprintf(L"scan_identtifier: the first symbol, $ found lookahead = %lc\n", lexer->lookahead);
       add_char(token, token_length++, lexer->lookahead);
       advance(lexer);
       if (lexer->lookahead == '{') {
@@ -167,7 +185,7 @@ static bool scan_identifier(TSLexer *lexer) {
     return !is_keyword(token);
   }
 
-  //wprintf(L"scan_identtifier: return false, lookahead = %lc, token = %S\n", lexer->lookahead, token);
+  wprintf(L"scan_identtifier: return false, lookahead = %lc, token = %S\n", lexer->lookahead, token);
   return false;
 }
 
@@ -450,7 +468,16 @@ static bool scan_ternary_qmark(TSLexer *lexer) {
 
 bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
                                                   const bool *valid_symbols) {
-  wprintf(L"external_scanner_scan: \n\tAUTOMATIC_SEMICOLON = %d\n\tTEMPLATE_CHARS = %d\n\tIDENTIFIER = %d\n\tDESCENDANT_OPERATOR = %d\n", valid_symbols[AUTOMATIC_SEMICOLON], valid_symbols[TEMPLATE_CHARS], valid_symbols[TERNARY_QMARK], valid_symbols[IDENTIFIER], valid_symbols[DESCENDANT_OPERATOR]);
+  wprintf(L"external_scanner_scan: \n\tAUTOMATIC_SEMICOLON = %d\n\tTEMPLATE_CHARS = %d\n\tTERNARY_QMARK = %d\n\tIDENTIFIER = %d\nis_at_included_range_start = %d\n",
+          valid_symbols[AUTOMATIC_SEMICOLON],
+          valid_symbols[TEMPLATE_CHARS],
+          valid_symbols[TERNARY_QMARK],
+          valid_symbols[IDENTIFIER],
+          lexer->is_at_included_range_start(lexer));
+  if (valid_symbols[IDENTIFIER]) {
+    wprintf(L"scan_identifier started\n");
+    return scan_identifier(lexer);
+  }
   if (valid_symbols[TEMPLATE_CHARS]) {
     if (valid_symbols[AUTOMATIC_SEMICOLON]) return false;
     return scan_template_chars(lexer);
@@ -459,9 +486,6 @@ bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
     if (!ret && valid_symbols[TERNARY_QMARK] && lexer->lookahead == '?')
       return scan_ternary_qmark(lexer);
     return ret;
-  }
-  if (valid_symbols[IDENTIFIER]) {
-    return scan_identifier(lexer);
   }
   //if (valid_symbols[IDENTIFIER] && valid_symbols[CSS_IDENTIFIER]) {
   //  #ifdef TREE_SITTER_DEBUG
