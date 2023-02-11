@@ -1308,17 +1308,7 @@
   {
     "type": "cssLiteral",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "css_arguments",
@@ -2244,17 +2234,7 @@
   {
     "type": "hash",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "id_name",
@@ -2278,17 +2258,7 @@
   {
     "type": "identifier",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "if_statement",
@@ -3537,21 +3507,6 @@
     }
   },
   {
-    "type": "private_property_identifier",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "program",
     "named": true,
     "fields": {},
@@ -3573,6 +3528,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "property_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "pseudo",
@@ -3796,6 +3756,16 @@
     }
   },
   {
+    "type": "shorthand_property_identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "shorthand_property_identifier_pattern",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "simpleSelector",
     "named": true,
     "fields": {},
@@ -3843,6 +3813,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "statement_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "string",
@@ -4888,7 +4863,7 @@
     "named": false
   },
   {
-    "type": "property_identifier",
+    "type": "private_property_identifier",
     "named": true
   },
   {
@@ -4910,18 +4885,6 @@
   {
     "type": "set",
     "named": false
-  },
-  {
-    "type": "shorthand_property_identifier",
-    "named": true
-  },
-  {
-    "type": "shorthand_property_identifier_pattern",
-    "named": true
-  },
-  {
-    "type": "statement_identifier",
-    "named": true
   },
   {
     "type": "static",

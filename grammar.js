@@ -5,17 +5,19 @@ module.exports = grammar({
   name: 'jsslang',
 
   ...javascript,
+
+  word: $ => $._identifierNotReserved,
+
   externals: $ => [
     $._automatic_semicolon,
     $._template_chars,
     $._ternary_qmark,
-    $.identifier,
-    //$.css_identifier,
+    $._identifierNotReserved,
   ],
   conflicts: $ => [
     [$.unary_expression, $.cssLiteral],
-    [$.primary_expression, $._jssSelector],
-    [$._jssSelector, $.jssPropertyName],
+    //[$.primary_expression, $._jssSelector],
+    //[$._jssSelector, $.jssPropertyName],
 
     [$.primary_expression, $.cssLiteral],
     [$.labeled_statement, $.cssLiteral],
@@ -25,33 +27,17 @@ module.exports = grammar({
     [$.assignment_expression, $.cssLiteral],
     [$.decorator_call_expression, $.cssLiteral],
 
-    [$.simpleSelector, $.jssPropertyName],
 
-    // jsx fix
-    [$.jsx_opening_element, $.jsx_self_closing_element, $.jsx_identifier],
-    [$.jsx_namespace_name, $.jsx_identifier],
-    [$.jsx_opening_element, $.jsx_identifier],
-    [$.jsx_self_closing_element, $.jsx_identifier],
-    [$.jsx_attribute, $.jsx_identifier],
-    [$.jsx_closing_element, $.jsx_identifier],
-
-    // css_identifier fix
+    //// css_identifier fix
     [$.simpleSelector, $.css_identifier],
     [$.pseudo_class_arguments, $.css_binary_expression],
     [$.cssLiteral, $.css_binary_expression],
+    [$.simpleSelector, $.jssPropertyName],
     [$.css_arguments, $.css_binary_expression],
     [$.css_binary_expression, $.feature_query],
     [$.jssPropertyValue, $.css_identifier],
 
-    //jsx fix
-    [$.jsx_opening_element, $.jsx_identifier, $.jsx_self_closing_element],
-    [$.jsx_identifier, $.jsx_namespace_name],
-    [$.jsx_opening_element, $.jsx_identifier],
-    [$.jsx_identifier, $.jsx_self_closing_element],
-    [$.jsx_identifier, $.jsx_attribute],
-    [$.jsx_identifier, $.jsx_closing_element],
-    [$.jsx_opening_element],
-
+    [$.identifier, $.cssLiteral],
 
     ...javascript.conflicts($),
   ],
@@ -63,7 +49,7 @@ module.exports = grammar({
 
     program: $ => seq(
       optional($.hash_bang_line),
-      repeat($._jssStatement)
+      repeat($._jssStatement),
     ),
 
     _jssStatement: $ => choice(
@@ -71,25 +57,20 @@ module.exports = grammar({
       $.statement,
     ),
 
-    //identifier: $ => { // js identifier without $
-    //  // NOTE: $ symbol in identifier conflicts with string templeates ${}
-    //  const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
-    //  const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
-    //  return token(seq(alpha, repeat(alphanumeric)));
-    //},
-    //identifier: $ => choice(
-    //  $.identifier_without_$,
-    //  $.identifier_with_$,
-    //),
-    private_property_identifier: $ => {
-      return seq('#', $.identifier);
+    _identifierJs: $ => { // js identifier without $
+      // NOTE: $ symbol in identifier conflicts with string templeates ${}
+      const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
+      const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
+      return token(seq(alpha, repeat(alphanumeric)));
     },
+    identifier: $ => choice(
+      $._identifierNotReserved,
+      $._identifierJs,
+    ),
 
-
-    //cssLiteral: $ => $.css_identifier,
     cssLiteral: $ => prec.right(repeat1(
       choice(
-        $.identifier,
+        $._identifierNotReserved,
         '-', //TODO withoud spaces
       ),
     )),
@@ -152,15 +133,14 @@ module.exports = grammar({
 
     // jss way declaration
 
-    _jssSelector: $ => prec.right(seq(
+    _jssSelector: $ => seq(
+      choice(
+        $._jssSelector,
+        $.simpleSelector,
+      ),
+      optional($.combinator),
       $.simpleSelector,
-      repeat(
-        seq(
-          optional($.combinator),
-          $.simpleSelector,
-        )
-      )
-    )),
+    ),
 
     simpleSelector: $ => prec.right(seq(
       choice(
@@ -515,10 +495,16 @@ module.exports = grammar({
 
 
     // jsx fix
-    //jsx_identifier: $ => /[a-zA-Z_$][a-zA-Z\d_$]*-[a-zA-Z\d_$\-]*/,
-    jsx_identifier: $ => seq($.identifier, optinal(seq('-', $.identifier))),
+    _jsx_identifier: $ => choice(
+      alias($.jsx_identifier, $.identifier),
+      alias($._identifierJs, $.identifier),
+    ),
 
-
+    nested_identifier: $ => prec('member', seq(
+      choice(alias($._identifierJs, $.identifier), $.nested_identifier),
+      '.',
+      alias($._identifierJs, $.identifier),
+    )),
   },
 });
 
