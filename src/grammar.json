@@ -6403,24 +6403,91 @@
       }
     },
     "cssLiteral": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "CHOICE",
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "STRING",
+                "value": "-"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_cssLiteralTailMinus"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
           "members": [
             {
               "type": "SYMBOL",
               "name": "_identifierNotReserved"
             },
             {
-              "type": "STRING",
-              "value": "-"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_cssLiteralTailIdent"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         }
-      }
+      ]
+    },
+    "_cssLiteralTailMinus": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_identifierNotReserved"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_cssLiteralTailIdent"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "_cssLiteralTailIdent": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "STRING",
+            "value": "-"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_cssLiteralTailMinus"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "stylessheetItem": {
       "type": "CHOICE",
@@ -6575,17 +6642,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_jssSelector"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "simpleSelector"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "simpleSelector"
         },
         {
           "type": "CHOICE",
@@ -6600,61 +6658,60 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "simpleSelector"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_jssSelector"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
     "simpleSelector": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_rest"
+          }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "CHOICE",
                 "members": [
                   {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "_jssIdent"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "*"
-                        }
-                      ]
-                    },
-                    "named": true,
-                    "value": "elementName"
+                    "type": "SYMBOL",
+                    "name": "_jssIdent"
                   },
                   {
-                    "type": "REPEAT",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "rest"
-                    }
+                    "type": "STRING",
+                    "value": "*"
                   }
                 ]
               },
-              {
-                "type": "REPEAT1",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "rest"
-                }
+              "named": true,
+              "value": "elementName"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_rest"
               }
-            ]
-          }
-        ]
-      }
+            }
+          ]
+        }
+      ]
     },
     "combinator": {
       "type": "CHOICE",
@@ -6673,7 +6730,7 @@
         }
       ]
     },
-    "rest": {
+    "_rest": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -6687,6 +6744,10 @@
                 {
                   "type": "STRING",
                   "value": "#"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_noSpace"
                 },
                 {
                   "type": "SYMBOL",
@@ -6705,6 +6766,10 @@
                 {
                   "type": "STRING",
                   "value": "."
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_noSpace"
                 },
                 {
                   "type": "SYMBOL",
@@ -8408,6 +8473,18 @@
       "cssLiteral"
     ],
     [
+      "simpleSelector"
+    ],
+    [
+      "_cssLiteralTailIdent"
+    ],
+    [
+      "_cssLiteralTailMinus"
+    ],
+    [
+      "cssLiteral"
+    ],
+    [
       "primary_expression",
       "_property_name"
     ],
@@ -8633,6 +8710,10 @@
     {
       "type": "SYMBOL",
       "name": "_identifierNotReserved"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_noSpace"
     }
   ],
   "inline": [

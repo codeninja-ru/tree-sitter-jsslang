@@ -3580,41 +3580,6 @@
     }
   },
   {
-    "type": "rest",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "arguments",
-          "named": true
-        },
-        {
-          "type": "attrib",
-          "named": true
-        },
-        {
-          "type": "attribute_name",
-          "named": true
-        },
-        {
-          "type": "cssClass",
-          "named": true
-        },
-        {
-          "type": "hash",
-          "named": true
-        },
-        {
-          "type": "pseudo",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "rest_pattern",
     "named": true,
     "fields": {},
@@ -3774,11 +3739,31 @@
       "required": true,
       "types": [
         {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "attrib",
+          "named": true
+        },
+        {
+          "type": "attribute_name",
+          "named": true
+        },
+        {
+          "type": "cssClass",
+          "named": true
+        },
+        {
           "type": "elementName",
           "named": true
         },
         {
-          "type": "rest",
+          "type": "hash",
+          "named": true
+        },
+        {
+          "type": "pseudo",
           "named": true
         }
       ]

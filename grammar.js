@@ -13,6 +13,7 @@ module.exports = grammar({
     $._template_chars,
     $._ternary_qmark,
     $._identifierNotReserved,
+    $._noSpace,
   ],
   conflicts: $ => [
     [$.unary_expression, $.cssLiteral],
@@ -38,6 +39,10 @@ module.exports = grammar({
     [$.jssPropertyValue, $.css_identifier],
 
     [$.identifier, $.cssLiteral],
+    [$.simpleSelector],
+    [$._cssLiteralTailIdent],
+    [$._cssLiteralTailMinus],
+    [$.cssLiteral],
 
     ...javascript.conflicts($),
   ],
@@ -68,12 +73,35 @@ module.exports = grammar({
       $._identifierJs,
     ),
 
-    cssLiteral: $ => prec.right(repeat1(
-      choice(
-        $._identifierNotReserved,
-        '-', //TODO withoud spaces
+    //cssLiteral: $ => repeat1(
+    //  choice(
+    //    $._identifierNotReserved,
+    //    '-', //TODO withoud spaces
+    //  ),
+    //),
+
+    cssLiteral: $ => choice(
+      seq(
+        repeat1('-'), //TODO no spaces betwen -
+        $._cssLiteralTailMinus,
       ),
-    )),
+      seq(
+        $._identifierNotReserved,
+        optional($._cssLiteralTailIdent),
+      )
+    ),
+
+    _cssLiteralTailMinus: $ => seq(
+      //$._noSpace,
+      $._identifierNotReserved,
+      optional($._cssLiteralTailIdent)
+    ),
+
+    _cssLiteralTailIdent: $ => seq(
+      //$._noSpace,
+      repeat1('-'), //TODO no spaces betwen -
+      optional($._cssLiteralTailMinus)
+    ),
 
     stylessheetItem: $ => choice(
       //rulesetStatement,
@@ -115,7 +143,7 @@ module.exports = grammar({
       ),
     ),
 
-    //_jssSelector2: $ => choice(
+    //_jssSelector: $ => choice(
     //  $.universal_selector,
     //  alias($._jssIdent, $.tag_name),
     //  $.class_selector,
@@ -133,39 +161,50 @@ module.exports = grammar({
 
     // jss way declaration
 
+    //_jssSelector: $ => sep1(
+    //  optional(
+    //    $.combinator,
+    //  ),
+    //  $.simpleSelector,
+    //),
+
     _jssSelector: $ => seq(
-      choice(
-        $._jssSelector,
-        $.simpleSelector,
-      ),
-      optional($.combinator),
       $.simpleSelector,
+      optional($.combinator),
+      optional($._jssSelector),
     ),
 
-    simpleSelector: $ => prec.right(seq(
-      choice(
-        seq(
-          alias(
-            choice($._jssIdent, '*'),
-            $.elementName,
-          ),
-          repeat($.rest),
+    //_jssSelector: $ => seq(
+    //  choice(
+    //    $._jssSelector,
+    //    $.simpleSelector,
+    //  ),
+    //  optional($.combinator),
+    //  $.simpleSelector,
+    //),
+
+    simpleSelector: $ => choice(
+      repeat1($._rest),
+      seq(
+        alias(
+          choice($._jssIdent, '*'),
+          $.elementName,
         ),
-        repeat1($.rest),
+        repeat($._rest),
       ),
-    )),
+    ),
 
     combinator: $ => choice(
       '+', '>', '~'
     ),
 
-    rest: $ => prec.right(choice(
+    _rest: $ => prec.right(choice(
       alias(
-        seq('#', $.cssLiteral),
+        seq('#', $._noSpace, $.cssLiteral),
         $.hash
       ),
       alias(
-        seq('.', $._jssIdent),
+        seq('.', $._noSpace, $._jssIdent),
         $.cssClass
       ),
       alias(

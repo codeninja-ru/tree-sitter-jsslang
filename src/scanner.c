@@ -7,10 +7,10 @@ enum TokenType {
   TEMPLATE_CHARS,
   TERNARY_QMARK,
   IDENTIFIER,
-  //CSS_IDENTIFIER, // identifier without $
+  NO_SPACE,
 };
 
-#define TREE_SITTER_DEBUG 1
+#define TREE_SITTER_DEBUG 0
 
 void *tree_sitter_jsslang_external_scanner_create() { return NULL; }
 void tree_sitter_jsslang_external_scanner_destroy(void *p) {}
@@ -213,99 +213,10 @@ static bool scan_identifier(TSLexer *lexer) {
   return false;
 }
 
-//static bool scan_css_identifier(TSLexer *lexer) {
-//  // exluding ${} from identifiers. see https://github.com/tree-sitter/tree-sitter/discussions/1252
-//  lexer->result_symbol = CSS_IDENTIFIER;
-//
-//  int token_length = 0;
-//  int32_t token[MAX_KEYWORD_SIZE] = {};
-//
-//  if (is_alpha(lexer->lookahead) ||
-//      is_css_symbol(lexer->lookahead)) {
-//      add_char(token, token_length++, lexer->lookahead);
-//      advance(lexer);
-//
-//    for (;;) {
-//      if (is_alpha(lexer->lookahead) ||
-//          iswdigit(lexer->lookahead) ||
-//          is_css_symbol(lexer->lookahead)) {
-//
-//          add_char(token, token_length++, lexer->lookahead);
-//          advance(lexer);
-//
-//      } else {
-//        break;
-//      }
-//    }
-//    return !is_keyword(token);
-//  }
-//
-//  return false;
-//}
-//
-//static bool scan_css_or_js_identifier(TSLexer *lexer) {
-//  // exluding ${} from identifiers. see https://github.com/tree-sitter/tree-sitter/discussions/1252
-//  lexer->result_symbol = IDENTIFIER;
-//
-//  int token_length = 0;
-//  int32_t token[MAX_KEYWORD_SIZE] = {};
-//
-//  if (is_alpha(lexer->lookahead) ||
-//      is_css_or_js_symbol(lexer->lookahead)) {
-//    lexer->mark_end(lexer);
-//
-//    if (lexer->lookahead == '$') {
-//      add_char(token, token_length++, lexer->lookahead);
-//      advance(lexer);
-//      if (lexer->lookahead == '{') {
-//        return false;
-//      }
-//    } else {
-//      add_char(token, token_length++, lexer->lookahead);
-//      advance(lexer);
-//      lexer->mark_end(lexer);
-//    }
-//
-//    for (;;) {
-//      if (is_alpha(lexer->lookahead) ||
-//          iswdigit(lexer->lookahead) ||
-//          is_css_or_js_symbol(lexer->lookahead)) {
-//
-//        if (lexer->lookahead == '$') {
-//          add_char(token, token_length++, lexer->lookahead);
-//          advance(lexer);
-//          if (lexer->lookahead == '{') {
-//            return !is_keyword(token);
-//          }
-//        } else {
-//          add_char(token, token_length++, lexer->lookahead);
-//          advance(lexer);
-//          lexer->mark_end(lexer);
-//        }
-//
-//      } else {
-//        break;
-//      }
-//    }
-//
-//    if (!is_keyword(token)) {
-//
-//      if (wcschr(token, '-')) {
-//        lexer->result_symbol = CSS_IDENTIFIER;
-//      } else if (wcschr(token, '$')) {
-//        lexer->result_symbol = IDENTIFIER;
-//      } else {
-//        lexer->result_symbol = CSS_IDENTIFIER;
-//      }
-//
-//      return true;
-//    } else {
-//      return false;
-//    }
-//  }
-//
-//  return false;
-//}
+static bool scan_no_space(TSLexer *lexer) {
+  lexer->result_symbol = NO_SPACE;
+  return !iswspace(lexer->lookahead);
+}
 
 static bool scan_template_chars(TSLexer *lexer) {
   lexer->result_symbol = TEMPLATE_CHARS;
@@ -492,13 +403,15 @@ static bool scan_ternary_qmark(TSLexer *lexer) {
 
 bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
                                                   const bool *valid_symbols) {
-  wprintf(L"external_scanner_scan: \n\tlookahead = %lc\n\tAUTOMATIC_SEMICOLON = %d\n\tTEMPLATE_CHARS = %d\n\tTERNARY_QMARK = %d\n\tIDENTIFIER = %d\n\tis_at_included_range_start = %d\n",
+  wprintf(L"external_scanner_scan: \n\tlookahead = %lc\n\tAUTOMATIC_SEMICOLON = %d\n\tTEMPLATE_CHARS = %d\n\tTERNARY_QMARK = %d\n\tIDENTIFIER = %d\n\tNO_SPACE = %d\n\tis_at_included_range_start = %d\n",
           lexer->lookahead,
           valid_symbols[AUTOMATIC_SEMICOLON],
           valid_symbols[TEMPLATE_CHARS],
           valid_symbols[TERNARY_QMARK],
           valid_symbols[IDENTIFIER],
+          valid_symbols[NO_SPACE],
           lexer->is_at_included_range_start(lexer));
+  bool isFirstSymbolSpace = iswspace(lexer->lookahead);
   if (valid_symbols[TEMPLATE_CHARS]) {
     if (valid_symbols[AUTOMATIC_SEMICOLON]) return false;
     return scan_template_chars(lexer);
@@ -507,21 +420,33 @@ bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
     if (!ret && valid_symbols[TERNARY_QMARK] && lexer->lookahead == '?')
       //return scan_ternary_qmark(lexer);
       if (scan_ternary_qmark(lexer)) {
+        wprintf(L"return true 1\n");
         return true;
       } else {
-        wprintf(L"-----------------> implement me 1 <---------------, lookahead = %lc\n", lexer->lookahead);
+        //wprintf(L"-----------------> implement me 1 <---------------, lookahead = %lc\n", lexer->lookahead);
+        wprintf(L"return false 2\n");
         return false;
       }
     if (!ret && valid_symbols[IDENTIFIER]) {
-      //wprintf(L"-----------------> implement me 2 <---------------, lookahead = %lc\n", lexer->lookahead);
+      wprintf(L"-----------------> implement me 2 <---------------, lookahead = %lc\n", lexer->lookahead);
+      wprintf(L"return false 3\n");
       return false;
       //return scan_identifier(lexer);
+    }
+    if (!ret && valid_symbols[NO_SPACE] && isFirstSymbolSpace) {
+      lexer->result_symbol = NO_SPACE;
+      wprintf(L"return true 4\n");
+      return true;
     }
     return ret;
   }
   if (valid_symbols[IDENTIFIER]) {
     wprintf(L"scan_identifier started\n");
     return scan_identifier(lexer);
+  }
+  if (valid_symbols[NO_SPACE]) {
+    wprintf(L"scan_no_space started\n");
+    return scan_no_space(lexer);
   }
   //if (valid_symbols[IDENTIFIER] && valid_symbols[CSS_IDENTIFIER]) {
   //  #ifdef TREE_SITTER_DEBUG
@@ -534,6 +459,7 @@ bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
   //  return scan_css_identifier(lexer);
   //}
   if (valid_symbols[TERNARY_QMARK]) {
+    wprintf(L"ternary mark\n");
     return scan_ternary_qmark(lexer);
   }
   return false;
