@@ -10,6 +10,8 @@ enum TokenType {
   NO_SPACE,
 };
 
+const int CHECK_FOR_IDENTIFIER = 3;
+
 #define TREE_SITTER_DEBUG 0
 
 void *tree_sitter_jsslang_external_scanner_create() { return NULL; }
@@ -137,6 +139,47 @@ static void add_char(int32_t *token, int token_length, int32_t ch) {
     }
 }
 
+static bool scan_identifier_started_with_i(TSLexer *lexer) {
+  lexer->result_symbol = IDENTIFIER;
+  int token_length = 0;
+  int32_t token[MAX_KEYWORD_SIZE] = {};
+  wprintf(L"scan_identifier_started_with_i: enter lookahead = %lc (%d)\n", lexer->lookahead, lexer->lookahead);
+  add_char(token, token_length++, lexer->lookahead); //the first char is "i"
+
+  for (;;) {
+    //wprintf(L"scan_identtifier: the next symbol, lookahead = %lc\n", lexer->lookahead);
+    if (is_alpha(lexer->lookahead) ||
+        iswdigit(lexer->lookahead) ||
+        is_symbol(lexer->lookahead)) {
+
+      //wprintf(L"scan_identtifier: OK, lookahead = %lc\n", lexer->lookahead);
+
+      if (lexer->lookahead == '$') {
+        //wprintf(L"scan_identtifier: $ is found, lookahead = %lc\n", lexer->lookahead);
+        advance(lexer);
+        if (lexer->lookahead == '{') {
+          //wprintf(L"scan_identtifier: ${ is found, lookahead = %lc, token = %S\n", lexer->lookahead, token);
+          break;
+        }
+        add_char(token, token_length++, lexer->lookahead);
+      } else {
+        //wprintf(L"scan_identtifier: end, lookahead = %lc, token = %S\n", lexer->lookahead, token);
+        add_char(token, token_length++, lexer->lookahead);
+        advance(lexer);
+        lexer->mark_end(lexer);
+      }
+
+    } else {
+      break;
+    }
+  }
+
+  if (!is_keyword(token)) {
+    wprintf(L"scan_identtifier: found token %S  <---------------------------\n", token);
+  }
+  return !is_keyword(token);
+}
+
 static bool scan_identifier(TSLexer *lexer) {
   // exluding ${} from identifiers. see https://github.com/tree-sitter/tree-sitter/discussions/1252
   lexer->result_symbol = IDENTIFIER;
@@ -189,7 +232,8 @@ static bool scan_identifier(TSLexer *lexer) {
           advance(lexer);
           if (lexer->lookahead == '{') {
             //wprintf(L"scan_identtifier: ${ is found, lookahead = %lc, token = %S\n", lexer->lookahead, token);
-            return !is_keyword(token);
+            //return !is_keyword(token);
+            break;
           }
           add_char(token, token_length++, lexer->lookahead);
         } else {
@@ -204,12 +248,12 @@ static bool scan_identifier(TSLexer *lexer) {
       }
     }
     if (!is_keyword(token)) {
-      wprintf(L"scan_identtifier: found token %S  <---------------------------\n", token);
+      wprintf(L"scan_identifier: found token %S  <---------------------------\n", token);
     }
     return !is_keyword(token);
   }
 
-  //wprintf(L"scan_identtifier: return false, lookahead = %lc, token = %S\n", lexer->lookahead, token);
+  //wprintf(L"scan_identifier: return false, lookahead = %lc, token = %S\n", lexer->lookahead, token);
   return false;
 }
 
@@ -305,23 +349,46 @@ static bool scan_whitespace_and_comments(TSLexer *lexer) {
     }
   }
 }
+static bool scan_automatic_semicolon_started_with_i(TSLexer *lexer) {
+  // Don't insert a semicolon before `in` or `instanceof`, but do insert one
+  // before an identifier.
+  skip(lexer);
 
-static bool scan_automatic_semicolon(TSLexer *lexer) {
+  if (lexer->lookahead != 'n') return true;
+  skip(lexer);
+
+  if (!iswalpha(lexer->lookahead)) return false;
+
+  for (unsigned i = 0; i < 8; i++) {
+    if (lexer->lookahead != "stanceof"[i]) return true;
+    skip(lexer);
+  }
+
+  if (!iswalpha(lexer->lookahead)) return false;
+
+  return true;
+}
+
+const int DO_NOT_INSERT_SEMICOLON = 0;
+const int INSERT_SEMICOLON = 1;
+const int DO_NOT_INSERT_SEMICOLON_SCAN_NEXT = 2;
+
+static int scan_automatic_semicolon(TSLexer *lexer) {
   lexer->result_symbol = AUTOMATIC_SEMICOLON;
   lexer->mark_end(lexer);
 
   for (;;) {
-    if (lexer->lookahead == 0) return true;
-    if (lexer->lookahead == '}') return true;
-    if (lexer->is_at_included_range_start(lexer)) return true;
+    if (lexer->lookahead == 0) return INSERT_SEMICOLON;
+    if (lexer->lookahead == '}') return INSERT_SEMICOLON;
+    if (lexer->is_at_included_range_start(lexer)) return INSERT_SEMICOLON;
     if (lexer->lookahead == '\n') break;
-    if (!iswspace(lexer->lookahead)) return false;
+    if (!iswspace(lexer->lookahead)) return DO_NOT_INSERT_SEMICOLON_SCAN_NEXT;
     skip(lexer);
   }
 
   skip(lexer);
 
-  if (!scan_whitespace_and_comments(lexer)) return false;
+  if (!scan_whitespace_and_comments(lexer)) return DO_NOT_INSERT_SEMICOLON_SCAN_NEXT;
 
   switch (lexer->lookahead) {
     case ',':
@@ -340,41 +407,44 @@ static bool scan_automatic_semicolon(TSLexer *lexer) {
     case '|':
     case '&':
     case '/':
-      return false;
+      //TODO do we need "case '$'" here?
+      return DO_NOT_INSERT_SEMICOLON;
 
     // Insert a semicolon before `--` and `++`, but not before binary `+` or `-`.
     case '+':
       skip(lexer);
-      return lexer->lookahead == '+';
+      if(lexer->lookahead == '+') return INSERT_SEMICOLON; else return DO_NOT_INSERT_SEMICOLON;
     case '-':
       skip(lexer);
-      return lexer->lookahead == '-';
+      if(lexer->lookahead == '-') return INSERT_SEMICOLON; else return DO_NOT_INSERT_SEMICOLON;
 
     // Don't insert a semicolon before `!=`, but do insert one before a unary `!`.
     case '!':
       skip(lexer);
-      return lexer->lookahead != '=';
+      if(lexer->lookahead != '=') return INSERT_SEMICOLON; else return DO_NOT_INSERT_SEMICOLON;
 
     // Don't insert a semicolon before `in` or `instanceof`, but do insert one
     // before an identifier.
     case 'i':
+      // it will be handled in scan_automatic_semicolon_started_with_i
       skip(lexer);
 
-      if (lexer->lookahead != 'n') return true;
+      if (lexer->lookahead != 'n') return INSERT_SEMICOLON;
       skip(lexer);
 
-      if (!iswalpha(lexer->lookahead)) return false;
+      if (!iswalpha(lexer->lookahead)) return DO_NOT_INSERT_SEMICOLON;
 
       for (unsigned i = 0; i < 8; i++) {
-        if (lexer->lookahead != "stanceof"[i]) return true;
+        if (lexer->lookahead != "stanceof"[i]) return INSERT_SEMICOLON;
         skip(lexer);
       }
 
-      if (!iswalpha(lexer->lookahead)) return false;
+
+      if (!iswalpha(lexer->lookahead)) return DO_NOT_INSERT_SEMICOLON;
       break;
   }
 
-  return true;
+  return INSERT_SEMICOLON;
 }
 
 static bool scan_ternary_qmark(TSLexer *lexer) {
@@ -411,13 +481,15 @@ bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
           valid_symbols[IDENTIFIER],
           valid_symbols[NO_SPACE],
           lexer->is_at_included_range_start(lexer));
-  bool isFirstSymbolSpace = iswspace(lexer->lookahead);
   if (valid_symbols[TEMPLATE_CHARS]) {
     if (valid_symbols[AUTOMATIC_SEMICOLON]) return false;
     return scan_template_chars(lexer);
   } else if (valid_symbols[AUTOMATIC_SEMICOLON]) {
-    bool ret = scan_automatic_semicolon(lexer);
-    if (!ret && valid_symbols[TERNARY_QMARK] && lexer->lookahead == '?')
+    int ret = scan_automatic_semicolon(lexer);
+    wprintf(L"scan_automatic_semicolon => %d, lookahead = %lc\n", ret, lexer->lookahead);
+
+    if ((ret == DO_NOT_INSERT_SEMICOLON || ret == DO_NOT_INSERT_SEMICOLON_SCAN_NEXT)
+        && valid_symbols[TERNARY_QMARK] && lexer->lookahead == '?') {
       //return scan_ternary_qmark(lexer);
       if (scan_ternary_qmark(lexer)) {
         wprintf(L"return true 1\n");
@@ -427,18 +499,37 @@ bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
         wprintf(L"return false 2\n");
         return false;
       }
-    if (!ret && valid_symbols[IDENTIFIER]) {
-      wprintf(L"-----------------> implement me 2 <---------------, lookahead = %lc\n", lexer->lookahead);
-      wprintf(L"return false 3\n");
-      return false;
-      //return scan_identifier(lexer);
+
     }
-    if (!ret && valid_symbols[NO_SPACE] && isFirstSymbolSpace) {
-      lexer->result_symbol = NO_SPACE;
-      wprintf(L"return true 4\n");
+
+    if (ret == DO_NOT_INSERT_SEMICOLON_SCAN_NEXT && valid_symbols[IDENTIFIER]) {
+      return scan_identifier(lexer);
+    }
+
+    //if (!ret) {
+    //  wprintf(L"-----------------> implement me 2 <---------------, lookahead = %lc\n", lexer->lookahead);
+
+    //  if (lexer->lookahead == 'i') {
+    //    ret = scan_automatic_semicolon_started_with_i(lexer);
+    //  } else {
+    //    if (valid_symbols[IDENTIFIER]) {
+    //      return scan_identifier(lexer);
+    //    } else {
+    //      return false;
+    //    }
+    //  }
+    //}
+
+    wprintf(L"scan_automatic_semicolon2 => %d, lookahead = %lc\n", ret, lexer->lookahead);
+    switch (ret) {
+    case INSERT_SEMICOLON:
       return true;
+    case DO_NOT_INSERT_SEMICOLON_SCAN_NEXT:
+    case DO_NOT_INSERT_SEMICOLON:
+    default:
+      return false;
     }
-    return ret;
+
   }
   if (valid_symbols[IDENTIFIER]) {
     wprintf(L"scan_identifier started\n");
