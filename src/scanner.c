@@ -535,10 +535,6 @@ bool tree_sitter_jsslang_external_scanner_scan(void *payload, TSLexer *lexer,
     wprintf(L"scan_identifier started\n");
     return scan_identifier(lexer);
   }
-  if (valid_symbols[NO_SPACE]) {
-    wprintf(L"scan_no_space started\n");
-    return scan_no_space(lexer);
-  }
   //if (valid_symbols[IDENTIFIER] && valid_symbols[CSS_IDENTIFIER]) {
   //  #ifdef TREE_SITTER_DEBUG
   //  wprintf(L"css or js identifier\n");

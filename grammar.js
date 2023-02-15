@@ -13,7 +13,6 @@ module.exports = grammar({
     $._template_chars,
     $._ternary_qmark,
     $._identifierNotReserved,
-    $._noSpace,
   ],
   conflicts: $ => [
     [$.unary_expression, $.cssLiteral],
@@ -200,11 +199,11 @@ module.exports = grammar({
 
     _rest: $ => prec.right(choice(
       alias(
-        seq('#', $._noSpace, $.cssLiteral),
+        seq('#', /*$._noSpace,*/ $.cssLiteral),
         $.hash
       ),
       alias(
-        seq('.', $._noSpace, $._jssIdent),
+        seq('.', /*$._noSpace,*/ $._jssIdent),
         $.cssClass
       ),
       alias(
