@@ -36,27 +36,6 @@ static bool is_symbol(int32_t lookahead) {
   };
 }
 
-static bool is_css_or_js_symbol(int32_t lookahead) {
-  switch (lookahead) {
-  case '_':
-  case '-':
-  case '$':
-    return true;
-  default:
-    return false;
-  };
-}
-
-static bool is_css_symbol(int32_t lookahead) {
-  switch (lookahead) {
-  case '_':
-  case '-':
-    return true;
-  default:
-    return false;
-  };
-}
-
 #define MAX_KEYWORD_SIZE 125
 const int32_t KEYWORDS[][MAX_KEYWORD_SIZE] = {
   L"if",
@@ -269,25 +248,6 @@ static bool scan_whitespace_and_comments(TSLexer *lexer) {
       return true;
     }
   }
-}
-static bool scan_automatic_semicolon_started_with_i(TSLexer *lexer) {
-  // Don't insert a semicolon before `in` or `instanceof`, but do insert one
-  // before an identifier.
-  skip(lexer);
-
-  if (lexer->lookahead != 'n') return true;
-  skip(lexer);
-
-  if (!iswalpha(lexer->lookahead)) return false;
-
-  for (unsigned i = 0; i < 8; i++) {
-    if (lexer->lookahead != "stanceof"[i]) return true;
-    skip(lexer);
-  }
-
-  if (!iswalpha(lexer->lookahead)) return false;
-
-  return true;
 }
 
 const int DO_NOT_INSERT_SEMICOLON = 0;
