@@ -13,37 +13,35 @@ module.exports = grammar({
     $._template_chars,
     $._ternary_qmark,
     $._identifierNotReserved,
+    //TODO consider adding reservedIdentifier for usage in css selectors
   ],
   conflicts: $ => [
-    [$.unary_expression, $.cssLiteral],
-    //[$.primary_expression, $._jssSelector],
-    //[$._jssSelector, $.jssPropertyName],
-
-    [$.primary_expression, $.cssLiteral],
-    [$.labeled_statement, $.cssLiteral],
-    [$.assignment_expression, $.pattern, $.cssLiteral],
-    [$.primary_expression, $.pattern, $.cssLiteral],
-    [$._augmented_assignment_lhs, $.cssLiteral],
-    [$.assignment_expression, $.cssLiteral],
-    [$.decorator_call_expression, $.cssLiteral],
-
-
-    //// css_identifier fix
-    [$.simpleSelector, $.css_identifier],
-    [$.pseudo_class_arguments, $.css_binary_expression],
-    [$.cssLiteral, $.css_binary_expression],
-    [$.simpleSelector, $.jssPropertyName],
-    [$.css_arguments, $.css_binary_expression],
-    [$.css_binary_expression, $.feature_query],
-    [$.jssPropertyValue, $.css_identifier],
-
+    ...javascript.conflicts($),
     [$.identifier, $.cssLiteral],
     [$.simpleSelector],
+    [$.unary_expression, $.cssLiteral],
     [$._cssLiteralTailIdent],
     [$._cssLiteralTailMinus],
     [$.cssLiteral],
+    [$._rest],
+    [$.cssLiteral, $.css_binary_expression],
+    [$.simpleSelector, $.jssPropertyName],
+    [$.simpleSelector, $.css_identifier],
+    [$.pseudo_class_arguments, $.css_binary_expression],
+    [$.css_arguments, $.css_binary_expression],
+    [$.css_binary_expression, $.feature_query],
+    [$.jssPropertyValue, $.css_identifier],
+    [$.identifier, $._cssLiteralTailMinus],
+    [$.cssLiteral, $._cssLiteralTailMinus],
+    [$.cssLiteral, $.jssPropertyValue],
+    [$.jssPropertyValue],
 
-    ...javascript.conflicts($),
+    [$.primary_expression, $.function, $.generator_function],
+    [$.binary_expression, $.jssSpreadDefinition],
+    [$.subscript_expression, $.jssSpreadDefinition],
+    [$.member_expression, $.jssSpreadDefinition],
+    [$.update_expression, $.jssSpreadDefinition],
+
   ],
   precedences: $ => [
     ...javascript.precedences($),
@@ -57,7 +55,7 @@ module.exports = grammar({
     ),
 
     _jssStatement: $ => choice(
-      $.stylessheetItem,
+      $.stylesheetItem,
       $.statement,
     ),
 
@@ -81,7 +79,12 @@ module.exports = grammar({
 
     cssLiteral: $ => choice(
       seq(
-        repeat1('-'), //TODO no spaces betwen -
+        '-',
+        $._cssLiteralTailMinus,
+      ),
+      seq(
+        '--', //NOTE we put two minus here since there is update_expression in javascript
+        repeat(token.immediate('-')),
         $._cssLiteralTailMinus,
       ),
       seq(
@@ -98,11 +101,13 @@ module.exports = grammar({
 
     _cssLiteralTailIdent: $ => seq(
       //$._noSpace,
-      repeat1('-'), //TODO no spaces betwen -
+      '-',
+      repeat(token.immediate('-')),
       optional($._cssLiteralTailMinus)
     ),
 
-    stylessheetItem: $ => choice(
+    stylesheetItem: $ => choice(
+      $.jssPropertyDefinition,
       //rulesetStatement,
       $.rule_set,
       //jssVariableStatement,
@@ -167,11 +172,11 @@ module.exports = grammar({
     //  $.simpleSelector,
     //),
 
-    _jssSelector: $ => seq(
+    _jssSelector: $ => prec.right(seq(
       $.simpleSelector,
       optional($.combinator),
       optional($._jssSelector),
-    ),
+    )),
 
     //_jssSelector: $ => seq(
     //  choice(
@@ -182,24 +187,24 @@ module.exports = grammar({
     //  $.simpleSelector,
     //),
 
-    simpleSelector: $ => choice(
+    simpleSelector: $ => prec.right(choice(
       repeat1($._rest),
       seq(
         alias(
-          choice($._jssIdent, '*'),
+          choice($._jssIdent, $.nesting_selector, $.universal_selector),
           $.elementName,
         ),
         repeat($._rest),
       ),
-    ),
+    )),
 
     combinator: $ => choice(
       '+', '>', '~'
     ),
 
-    _rest: $ => prec.right(choice(
+    _rest: $ => choice(
       alias(
-        seq('#', /*$._noSpace,*/ $.cssLiteral),
+        seq('#', /*$._noSpace,*/ $._jssIdent),
         $.hash
       ),
       alias(
@@ -221,14 +226,14 @@ module.exports = grammar({
       alias(
         seq(
           choice(':', '::'),
-          choice(
+          seq(
             $._jssIdent,
             optional(alias($.pseudo_class_arguments, $.arguments))
           )
         ),
         $.pseudo,
       )
-    )),
+    ),
 
     // END jss way ends
 
@@ -316,13 +321,13 @@ module.exports = grammar({
         $.jssPropertyDefinition,
         $.jssSpreadDefinition,
       ),
+      optional(';')
     ),
 
     jssPropertyDefinition: $ => seq(
       $.jssPropertyName,
       ':',
       $.jssPropertyValue,
-      ';'
     ),
 
     jssPropertyName: $ => choice(
@@ -336,18 +341,17 @@ module.exports = grammar({
       choice(
         $.template_substitution,
         $.cssLiteral,
+        'var', 'and', 'or', 'not', // allowed literals, this word is reserved by js and is not allowed in cssLiteral
         $.number,
         $.string,
         seq('(', $.jssPropertyValue , ')'), //TODO expend on what is inside of ()
-        $.parenthesized_value, //TODO can contain ${}
-        '+', '!', '/', '.', '#', '%', ','
+        '+', '-', '*', '!', '/', '.', '#', '%', ',', ':', '?', '&'
       )
     ),
 
     jssSpreadDefinition: $ => seq(
       '...',
       $.expression,
-      ';'
     ),
 
     media_statement: $ => seq(
@@ -503,7 +507,7 @@ module.exports = grammar({
       '(',
       alias($.css_identifier, $.feature_name),
       ':',
-      repeat1($._value),
+      repeat1($.jssPropertyValue),
       ')'
     ),
 

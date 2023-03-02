@@ -12,11 +12,11 @@ div a {
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (charset_statement
       (string
         (string_fragment))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -44,7 +44,7 @@ div a {
             (jssPropertyValue
               (number)
               (cssLiteral)))))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -86,7 +86,7 @@ ${selector}:hover {
       (identifier)
       (string
         (string_fragment))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -157,7 +157,7 @@ import { clone } from 'lodash/cone';
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (css_import_statement
       (string
         (string_fragment))))
@@ -187,7 +187,7 @@ Nesting
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -236,7 +236,7 @@ Literals
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -284,7 +284,7 @@ const hidden = @block { display: none; };
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (jssVariableStatement
       (identifier)
       (block
@@ -294,7 +294,7 @@ const hidden = @block { display: none; };
               (cssLiteral))
             (jssPropertyValue
               (cssLiteral)))))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -337,7 +337,7 @@ const clearfix = @block {
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (jssVariableStatement
       (identifier)
       (block
@@ -387,7 +387,7 @@ const clearfix = @block {
                   (cssLiteral))
                 (jssPropertyValue
                   (cssLiteral)))))))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -406,7 +406,7 @@ const clearfix = @block {
         (jssDeclaration
           (jssSpreadDefinition
             (identifier))))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -453,7 +453,7 @@ Media Queries
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -468,7 +468,7 @@ Media Queries
             (jssPropertyValue
               (number)
               (cssLiteral)))))))
-  (stylessheetItem
+  (stylesheetItem
     (media_statement
       (feature_query
         (feature_name
@@ -515,7 +515,7 @@ Media Queries
                       (cssLiteral)
                       (parenthesized_value
                         (plain_value))))))))))))
-  (stylessheetItem
+  (stylesheetItem
     (media_statement
       (feature_query
         (feature_name
@@ -557,7 +557,7 @@ Media Queries nested
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -635,7 +635,7 @@ Scoped variables
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
@@ -697,7 +697,7 @@ At Rules
 --------------------------------------------------------------------------------
 
 (program
-  (stylessheetItem
+  (stylesheetItem
     (at_rule
       (cssLiteral)
       (block
@@ -730,7 +730,7 @@ At Rules
               (jssPropertyValue
                 (string
                   (string_fragment)))))))))
-  (stylessheetItem
+  (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector

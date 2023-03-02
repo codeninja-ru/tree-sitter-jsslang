@@ -85,6 +85,10 @@ const int32_t KEYWORDS[][MAX_KEYWORD_SIZE] = {
   L"with",
   L"debugger",
   L"void",
+  // for css
+  L"not",
+  L"or",
+  L"selector",
 };
 
 static bool is_keyword(int32_t *token) {
@@ -156,7 +160,12 @@ static bool scan_identifier(TSLexer *lexer) {
         break;
       }
     }
-    return !is_keyword(token);
+    if (is_keyword(token)) {
+      // NOTE: if it ends with "-" it's likly a part of kebab notation
+      return lexer->lookahead == '-';
+    } else {
+      return true;
+    }
   }
 
   return false;

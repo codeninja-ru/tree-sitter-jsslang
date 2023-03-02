@@ -6416,7 +6416,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "stylessheetItem"
+          "name": "stylesheetItem"
         },
         {
           "type": "SYMBOL",
@@ -6450,10 +6450,30 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "REPEAT1",
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_cssLiteralTailMinus"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "--"
+            },
+            {
+              "type": "REPEAT",
               "content": {
-                "type": "STRING",
-                "value": "-"
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
+                }
               }
             },
             {
@@ -6510,10 +6530,17 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT1",
+          "type": "STRING",
+          "value": "-"
+        },
+        {
+          "type": "REPEAT",
           "content": {
-            "type": "STRING",
-            "value": "-"
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "-"
+            }
           }
         },
         {
@@ -6530,9 +6557,13 @@
         }
       ]
     },
-    "stylessheetItem": {
+    "stylesheetItem": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "jssPropertyDefinition"
+        },
         {
           "type": "SYMBOL",
           "name": "rule_set"
@@ -6680,79 +6711,91 @@
       }
     },
     "_jssSelector": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "simpleSelector"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "combinator"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_jssSelector"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "simpleSelector"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "combinator"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_jssSelector"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
     },
     "simpleSelector": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_rest"
-          }
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_jssIdent"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "*"
-                  }
-                ]
-              },
-              "named": true,
-              "value": "elementName"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_rest"
-              }
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_rest"
             }
-          ]
-        }
-      ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_jssIdent"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "nesting_selector"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "universal_selector"
+                    }
+                  ]
+                },
+                "named": true,
+                "value": "elementName"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_rest"
+                }
+              }
+            ]
+          }
+        ]
+      }
     },
     "combinator": {
       "type": "CHOICE",
@@ -6772,171 +6815,167 @@
       ]
     },
     "_rest": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "#"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "cssLiteral"
-                }
-              ]
-            },
-            "named": true,
-            "value": "hash"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "#"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_jssIdent"
+              }
+            ]
           },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "."
-                },
-                {
+          "named": true,
+          "value": "hash"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "."
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_jssIdent"
+              }
+            ]
+          },
+          "named": true,
+          "value": "cssClass"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
                   "name": "_jssIdent"
-                }
-              ]
-            },
-            "named": true,
-            "value": "cssClass"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "["
                 },
-                {
-                  "type": "ALIAS",
-                  "content": {
+                "named": true,
+                "value": "attribute_name"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": "="
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "~="
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "^="
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "|="
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "*="
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "$="
+                          }
+                        ]
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_value"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "STRING",
+                "value": "]"
+              }
+            ]
+          },
+          "named": true,
+          "value": "attrib"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ":"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "::"
+                  }
+                ]
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
                     "type": "SYMBOL",
                     "name": "_jssIdent"
                   },
-                  "named": true,
-                  "value": "attribute_name"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "CHOICE",
-                          "members": [
-                            {
-                              "type": "STRING",
-                              "value": "="
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "~="
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "^="
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "|="
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "*="
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "$="
-                            }
-                          ]
-                        },
-                        {
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "ALIAS",
+                        "content": {
                           "type": "SYMBOL",
-                          "name": "_value"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "STRING",
-                  "value": "]"
-                }
-              ]
-            },
-            "named": true,
-            "value": "attrib"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ":"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "::"
-                    }
-                  ]
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_jssIdent"
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "ALIAS",
-                          "content": {
-                            "type": "SYMBOL",
-                            "name": "pseudo_class_arguments"
-                          },
-                          "named": true,
-                          "value": "arguments"
+                          "name": "pseudo_class_arguments"
                         },
-                        {
-                          "type": "BLANK"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            "named": true,
-            "value": "pseudo"
-          }
-        ]
-      }
+                        "named": true,
+                        "value": "arguments"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "named": true,
+          "value": "pseudo"
+        }
+      ]
     },
     "nesting_selector": {
       "type": "STRING",
@@ -7379,6 +7418,18 @@
               "name": "jssSpreadDefinition"
             }
           ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -7396,10 +7447,6 @@
         {
           "type": "SYMBOL",
           "name": "jssPropertyValue"
-        },
-        {
-          "type": "STRING",
-          "value": ";"
         }
       ]
     },
@@ -7438,6 +7485,22 @@
             "name": "cssLiteral"
           },
           {
+            "type": "STRING",
+            "value": "var"
+          },
+          {
+            "type": "STRING",
+            "value": "and"
+          },
+          {
+            "type": "STRING",
+            "value": "or"
+          },
+          {
+            "type": "STRING",
+            "value": "not"
+          },
+          {
             "type": "SYMBOL",
             "name": "number"
           },
@@ -7463,12 +7526,16 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "parenthesized_value"
+            "type": "STRING",
+            "value": "+"
           },
           {
             "type": "STRING",
-            "value": "+"
+            "value": "-"
+          },
+          {
+            "type": "STRING",
+            "value": "*"
           },
           {
             "type": "STRING",
@@ -7493,6 +7560,18 @@
           {
             "type": "STRING",
             "value": ","
+          },
+          {
+            "type": "STRING",
+            "value": ":"
+          },
+          {
+            "type": "STRING",
+            "value": "?"
+          },
+          {
+            "type": "STRING",
+            "value": "&"
           }
         ]
       }
@@ -7507,10 +7586,6 @@
         {
           "type": "SYMBOL",
           "name": "expression"
-        },
-        {
-          "type": "STRING",
-          "value": ";"
         }
       ]
     },
@@ -8324,7 +8399,7 @@
           "type": "REPEAT1",
           "content": {
             "type": "SYMBOL",
-            "name": "_value"
+            "name": "jssPropertyValue"
           }
         },
         {
@@ -8440,84 +8515,6 @@
   ],
   "conflicts": [
     [
-      "unary_expression",
-      "cssLiteral"
-    ],
-    [
-      "primary_expression",
-      "cssLiteral"
-    ],
-    [
-      "labeled_statement",
-      "cssLiteral"
-    ],
-    [
-      "assignment_expression",
-      "pattern",
-      "cssLiteral"
-    ],
-    [
-      "primary_expression",
-      "pattern",
-      "cssLiteral"
-    ],
-    [
-      "_augmented_assignment_lhs",
-      "cssLiteral"
-    ],
-    [
-      "assignment_expression",
-      "cssLiteral"
-    ],
-    [
-      "decorator_call_expression",
-      "cssLiteral"
-    ],
-    [
-      "simpleSelector",
-      "css_identifier"
-    ],
-    [
-      "pseudo_class_arguments",
-      "css_binary_expression"
-    ],
-    [
-      "cssLiteral",
-      "css_binary_expression"
-    ],
-    [
-      "simpleSelector",
-      "jssPropertyName"
-    ],
-    [
-      "css_arguments",
-      "css_binary_expression"
-    ],
-    [
-      "css_binary_expression",
-      "feature_query"
-    ],
-    [
-      "jssPropertyValue",
-      "css_identifier"
-    ],
-    [
-      "identifier",
-      "cssLiteral"
-    ],
-    [
-      "simpleSelector"
-    ],
-    [
-      "_cssLiteralTailIdent"
-    ],
-    [
-      "_cssLiteralTailMinus"
-    ],
-    [
-      "cssLiteral"
-    ],
-    [
       "primary_expression",
       "_property_name"
     ],
@@ -8573,6 +8570,93 @@
     [
       "binary_expression",
       "_initializer"
+    ],
+    [
+      "identifier",
+      "cssLiteral"
+    ],
+    [
+      "simpleSelector"
+    ],
+    [
+      "unary_expression",
+      "cssLiteral"
+    ],
+    [
+      "_cssLiteralTailIdent"
+    ],
+    [
+      "_cssLiteralTailMinus"
+    ],
+    [
+      "cssLiteral"
+    ],
+    [
+      "_rest"
+    ],
+    [
+      "cssLiteral",
+      "css_binary_expression"
+    ],
+    [
+      "simpleSelector",
+      "jssPropertyName"
+    ],
+    [
+      "simpleSelector",
+      "css_identifier"
+    ],
+    [
+      "pseudo_class_arguments",
+      "css_binary_expression"
+    ],
+    [
+      "css_arguments",
+      "css_binary_expression"
+    ],
+    [
+      "css_binary_expression",
+      "feature_query"
+    ],
+    [
+      "jssPropertyValue",
+      "css_identifier"
+    ],
+    [
+      "identifier",
+      "_cssLiteralTailMinus"
+    ],
+    [
+      "cssLiteral",
+      "_cssLiteralTailMinus"
+    ],
+    [
+      "cssLiteral",
+      "jssPropertyValue"
+    ],
+    [
+      "jssPropertyValue"
+    ],
+    [
+      "primary_expression",
+      "function",
+      "generator_function"
+    ],
+    [
+      "binary_expression",
+      "jssSpreadDefinition"
+    ],
+    [
+      "subscript_expression",
+      "jssSpreadDefinition"
+    ],
+    [
+      "member_expression",
+      "jssSpreadDefinition"
+    ],
+    [
+      "update_expression",
+      "jssSpreadDefinition"
     ]
   ],
   "precedences": [

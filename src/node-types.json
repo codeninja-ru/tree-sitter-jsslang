@@ -1762,39 +1762,11 @@
       "required": true,
       "types": [
         {
-          "type": "color_value",
-          "named": true
-        },
-        {
-          "type": "css_binary_expression",
-          "named": true
-        },
-        {
-          "type": "css_call_expression",
-          "named": true
-        },
-        {
           "type": "feature_name",
           "named": true
         },
         {
-          "type": "float_value",
-          "named": true
-        },
-        {
-          "type": "integer_value",
-          "named": true
-        },
-        {
-          "type": "parenthesized_value",
-          "named": true
-        },
-        {
-          "type": "plain_value",
-          "named": true
-        },
-        {
-          "type": "string",
+          "type": "jssPropertyValue",
           "named": true
         }
       ]
@@ -2262,7 +2234,21 @@
   {
     "type": "hash",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        },
+        {
+          "type": "template_substitution",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "id_name",
@@ -2510,10 +2496,6 @@
         },
         {
           "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_value",
           "named": true
         },
         {
@@ -3559,7 +3541,7 @@
           "named": true
         },
         {
-          "type": "stylessheetItem",
+          "type": "stylesheetItem",
           "named": true
         }
       ]
@@ -3860,7 +3842,7 @@
     }
   },
   {
-    "type": "stylessheetItem",
+    "type": "stylesheetItem",
     "named": true,
     "fields": {},
     "children": {
@@ -3877,6 +3859,10 @@
         },
         {
           "type": "css_import_statement",
+          "named": true
+        },
+        {
+          "type": "jssPropertyDefinition",
           "named": true
         },
         {

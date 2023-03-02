@@ -33,4 +33,5 @@ deps:
 #	rm -rf /tmp/css
 
 parse: gen
-	$(TREE_SITTER) parse -d /tmp/test.jss
+#	$(TREE_SITTER) parse -d /tmp/test.jss
+	$(TREE_SITTER) parse -D /tmp/test.jss
