@@ -1,6 +1,6 @@
-==============================
+================================================================================
 Import statements
-==============================
+================================================================================
 
 @import url("fineprint.css") print;
 @import url("bluish.css") speech;
@@ -8,18 +8,39 @@ Import statements
 @import url("chrome://communicator/skin/");
 @import "common.css" screen;
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (import_statement (call_expression (function_name) (arguments (string_value))) (keyword_query))
-  (import_statement (call_expression (function_name) (arguments (string_value))) (keyword_query))
-  (import_statement (string_value))
-  (import_statement (call_expression (function_name) (arguments (string_value))))
-  (import_statement (string_value) (keyword_query)))
+(program
+  (stylesheetItem
+    (css_import_statement
+      (uri)
+      (keyword_query
+        (cssLiteral
+          (identifier)))))
+  (stylesheetItem
+    (css_import_statement
+      (uri)
+      (keyword_query
+        (cssLiteral
+          (identifier)))))
+  (stylesheetItem
+    (css_import_statement
+      (string
+        (string_fragment))))
+  (stylesheetItem
+    (css_import_statement
+      (uri)))
+  (stylesheetItem
+    (css_import_statement
+      (string
+        (string_fragment))
+      (keyword_query
+        (cssLiteral
+          (identifier))))))
 
-==============================
+================================================================================
 Namespace statements
-==============================
+================================================================================
 
 /* Default namespace */
 @namespace url(XML-namespace-URL);
@@ -31,21 +52,44 @@ Namespace statements
 @namespace prefix url(XML-namespace-URL);
 @namespace prefix "XML-namespace-URL";
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
+(program
   (comment)
-  (namespace_statement (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (string_value))
-  (namespace_statement (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (namespace_name) (call_expression (function_name) (arguments (plain_value))))
+  (stylesheetItem
+    (namespace_statement
+      (uri)))
+  (stylesheetItem
+    (namespace_statement
+      (string
+        (string_fragment))))
+  (stylesheetItem
+    (namespace_statement
+      (uri)))
+  (stylesheetItem
+    (namespace_statement
+      (namespace_name
+        (cssLiteral
+          (identifier)))
+      (uri)))
   (comment)
-  (namespace_statement (namespace_name) (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (namespace_name) (string_value)))
+  (stylesheetItem
+    (namespace_statement
+      (namespace_name
+        (cssLiteral
+          (identifier)))
+      (uri)))
+  (stylesheetItem
+    (namespace_statement
+      (namespace_name
+        (cssLiteral
+          (identifier)))
+      (string
+        (string_fragment)))))
 
-==============================
+================================================================================
 Keyframes statements
-==============================
+================================================================================
 
 @keyframes important1 {
   from { margin-top: 50px; }
@@ -53,46 +97,140 @@ Keyframes statements
   to   { margin-top: 100px; }
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (keyframe_block (from) (block (declaration (property_name) (integer_value (unit)))))
-    (keyframe_block (integer_value (unit)) (block (declaration (property_name) (integer_value (unit)) (important))))
-    (comment)
-    (keyframe_block (to) (block (declaration (property_name) (integer_value (unit))))))))
+(program
+  (stylesheetItem
+    (keyframes_statement
+      (keyframes_name
+        (cssLiteral
+          (identifier)))
+      (keyframe_block_list
+        (keyframe_block
+          (from)
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (identifier)))))))
+        (keyframe_block
+          (integer_value
+            (unit))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))))))
+        (comment)
+        (keyframe_block
+          (to)
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
+                (jssPropertyValue
+                  (number)
+                  (cssLiteral
+                    (identifier)))))))))))
 
-==============================
+================================================================================
 Media statements
-==============================
+================================================================================
 
 @media screen and (min-width: 30em) and (orientation: landscape) {}
 @media (min-height: 680px), screen and (orientation: portrait) {}
 @media not all and (monochrome) {}
 @media only screen {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (media_statement
-    (binary_query
-      (binary_query
-        (keyword_query)
-        (feature_query (feature_name) (integer_value (unit))))
-      (feature_query (feature_name) (plain_value)))
-    (block))
-  (media_statement
-    (feature_query (feature_name) (integer_value (unit)))
-    (binary_query (keyword_query) (feature_query (feature_name) (plain_value)))
-    (block))
-  (media_statement
-    (binary_query (unary_query (keyword_query)) (parenthesized_query (keyword_query)))
-    (block))
-  (media_statement (unary_query (keyword_query)) (block)))
+(program
+  (stylesheetItem
+    (media_statement
+      (media_query_list
+        (media_query
+          (media_type
+            (identifier))
+          (jss_expression
+            (media_feature
+              (identifier)
+              (identifier))
+            (expr
+              (term
+                (integer_value
+                  (unit)))))
+          (jss_expression
+            (media_feature
+              (identifier))
+            (expr
+              (term
+                (cssLiteral
+                  (identifier)))))))
+      (block)))
+  (stylesheetItem
+    (media_statement
+      (media_query_list
+        (media_query
+          (jss_expression
+            (media_feature
+              (identifier)
+              (identifier))
+            (expr
+              (term
+                (integer_value
+                  (unit))))))
+        (media_query
+          (media_type
+            (identifier))
+          (jss_expression
+            (media_feature
+              (identifier))
+            (expr
+              (term
+                (cssLiteral
+                  (identifier)))))))
+      (block)))
+  (stylesheetItem
+    (media_statement
+      (media_query_list
+        (media_query
+          (media_type
+            (identifier))
+          (jss_expression
+            (media_feature
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (media_statement
+      (media_query_list
+        (media_query
+          (media_type
+            (identifier))))
+      (block))))
 
-==============================
+================================================================================
 Supports statements
-==============================
+================================================================================
 
 @supports (animation-name: test) {
   div { animation-name: test; }
@@ -101,59 +239,158 @@ Supports statements
 @supports not ((text-align-last: justify) or (-moz-text-align-last: justify)) {}
 @supports not selector(:matches(a, b)) {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (supports_statement
-    (feature_query (feature_name) (plain_value))
-    (block
-      (rule_set (selectors (tag_name)) (block
-        (declaration (property_name) (plain_value))))))
-  (supports_statement
-    (binary_query
-      (feature_query (feature_name) (plain_value))
-      (feature_query (feature_name) (plain_value)))
-    (block))
-  (supports_statement
-    (unary_query (parenthesized_query (binary_query
-      (feature_query (feature_name) (plain_value))
-      (feature_query (feature_name) (plain_value)))))
-    (block))
-  (supports_statement
-    (unary_query (selector_query (pseudo_class_selector
-      (class_name)
-      (arguments (tag_name) (tag_name)))))
-    (block)))
+(program
+  (stylesheetItem
+    (supports_statement
+      (feature_query
+        (feature_name
+          (cssLiteral
+            (identifier)
+            (identifier)))
+        (jssPropertyValue
+          (cssLiteral
+            (identifier))))
+      (block
+        (rule_set
+          (selectors
+            (simpleSelector
+              (elementName
+                (cssLiteral
+                  (identifier)))))
+          (block
+            (jssDeclaration
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (identifier))))))))))
+  (stylesheetItem
+    (supports_statement
+      (binary_query
+        (feature_query
+          (feature_name
+            (cssLiteral
+              (identifier)
+              (identifier)))
+          (jssPropertyValue
+            (cssLiteral
+              (identifier))))
+        (feature_query
+          (feature_name
+            (cssLiteral
+              (identifier)
+              (identifier)
+              (identifier)))
+          (jssPropertyValue
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (supports_statement
+      (unary_query
+        (parenthesized_query
+          (binary_query
+            (feature_query
+              (feature_name
+                (cssLiteral
+                  (identifier)
+                  (identifier)
+                  (identifier)))
+              (jssPropertyValue
+                (cssLiteral
+                  (identifier))))
+            (feature_query
+              (feature_name
+                (cssLiteral
+                  (identifier)
+                  (identifier)
+                  (identifier)
+                  (identifier)))
+              (jssPropertyValue
+                (cssLiteral
+                  (identifier)))))))
+      (block)))
+  (stylesheetItem
+    (supports_statement
+      (unary_query
+        (selector_query
+          (simpleSelector
+            (pseudo)
+            (pseudo
+              (cssLiteral
+                (identifier)))
+            (pseudo)
+            (pseudo
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (pseudo))))
+      (block))))
 
-==============================
+================================================================================
 Charset statements
-==============================
+================================================================================
 
 @charset "utf-8";
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (charset_statement (string_value)))
+(program
+  (stylesheetItem
+    (charset_statement
+      (string
+        (string_fragment)))))
 
-==============================
+================================================================================
 Other at-statements
-==============================
+================================================================================
 
 @font-face {
   font-family: "Open Sans";
   src: url("/a") format("woff2"), url("/b/c") format("woff");
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (at_rule
-    (at_keyword)
-    (block
-      (declaration (property_name) (string_value))
-      (declaration (property_name)
-        (call_expression (function_name) (arguments (string_value)))
-        (call_expression (function_name) (arguments (string_value)))
-        (call_expression (function_name) (arguments (string_value)))
-        (call_expression (function_name) (arguments (string_value)))))))
+(program
+  (stylesheetItem
+    (at_rule
+      (cssLiteral
+        (identifier)
+        (identifier))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (string
+                (string_fragment)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (uri)
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (string
+                  (string_fragment)))
+              (uri)
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (string
+                  (string_fragment))))))))))

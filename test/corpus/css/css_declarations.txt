@@ -1,85 +1,142 @@
-==========================
+================================================================================
 Function calls
-==========================
+================================================================================
 
 a {
   color: rgba(0, 255, 0, 0.5);
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration
-        (property_name)
-        (call_expression (function_name) (arguments
-          (integer_value)
-          (integer_value)
-          (integer_value)
-          (float_value)))))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (number)
+                (number)
+                (number)
+                (number)))))))))
 
-=============================================
+================================================================================
 Calls where each argument has multiple values
-=============================================
+================================================================================
 
 div {
   background: repeating-linear-gradient(red, orange 50px);
   clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set (selectors (tag_name)) (block
-    (declaration
-      (property_name)
-      (call_expression (function_name) (arguments
-        (plain_value)
-        (plain_value)
-        (integer_value (unit)))))
-    (declaration
-      (property_name)
-      (call_expression (function_name) (arguments
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))))))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)
+                (identifier)
+                (identifier))
+              (jssPropertyValue
+                (cssLiteral
+                  (identifier))
+                (cssLiteral
+                  (identifier))
+                (number)
+                (cssLiteral
+                  (identifier))))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)
+                (number)))))))))
 
-============================
+================================================================================
 Color literals
-============================
+================================================================================
 
 a {
   b: #fafd04;
   c: #fafd0401;
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration (property_name) (color_value))
-      (declaration (property_name) (color_value)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)))))))))
 
-============================
+================================================================================
 Numbers
-============================
+================================================================================
 
 a {
   b: 0.5%;
@@ -90,20 +147,73 @@ a {
   margin: -0.0px;
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set (selectors (tag_name)) (block
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (integer_value (unit)))
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (integer_value (unit)))
-    (declaration (property_name) (float_value (unit))))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (identifier)))))))))
 
-============================
+================================================================================
 Binary arithmetic operators
-============================
+================================================================================
 
 a {
   width: calc(100% - 80px);
@@ -111,159 +221,340 @@ a {
   font-size: calc(10px + (56 - 10) * ((100vw - 320px) / (1920 - 320)));
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration
-        (property_name)
-        (call_expression (function_name) (arguments (binary_expression (integer_value (unit)) (integer_value (unit))))))
-      (declaration
-        (property_name)
-        (binary_expression (integer_value) (integer_value)))
-      (declaration
-        (property_name)
-        (call_expression
-          (function_name)
-          (arguments
-            (binary_expression
-              (binary_expression
-                (integer_value (unit))
-                (parenthesized_value (binary_expression (integer_value) (integer_value))))
-              (parenthesized_value
-                (binary_expression
-                  (parenthesized_value (binary_expression (integer_value (unit)) (integer_value (unit))))
-                  (parenthesized_value (binary_expression (integer_value) (integer_value))))))))))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (number)
+                (number)
+                (cssLiteral
+                  (identifier))))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (number))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (number)
+                (cssLiteral
+                  (identifier))
+                (jssPropertyValue
+                  (number)
+                  (number))
+                (jssPropertyValue
+                  (jssPropertyValue
+                    (number)
+                    (cssLiteral
+                      (identifier))
+                    (number)
+                    (cssLiteral
+                      (identifier)))
+                  (jssPropertyValue
+                    (number)
+                    (number)))))))))))
 
-============================
+================================================================================
 Strings
-============================
+================================================================================
 
 a {
   b: '';
   c: '\'hi\'';
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration (property_name) (string_value))
-      (declaration (property_name) (string_value)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (string))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (string
+                (escape_sequence)
+                (string_fragment)
+                (escape_sequence)))))))))
 
-============================
+================================================================================
 URLs
-============================
+================================================================================
 
 a {
   b: http://something-else?foo=bar;
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration (property_name) (plain_value)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)))))
+        (comment)))))
 
-============================
+================================================================================
 Important declarations
-============================
+================================================================================
 
 a {
   b: c !important;
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration (property_name) (plain_value) (important)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))))))))
 
-============================
+================================================================================
 Declarations without trailing semicolons
-============================
+================================================================================
 
 a {
   b: c;
   d: e
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration (property_name) (plain_value))
-      (declaration (property_name) (plain_value)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)))))))))
 
-=======================================
+================================================================================
 Comments right after numbers
-=======================================
+================================================================================
 
 a {
 	shape-outside: circle(20em/*=*/at 50% 50%);
 	shape-outside: inset(1em, 1em, 1em, 1em);
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (declaration (property_name) (call_expression (function_name) (arguments
-        (integer_value (unit))
-        (comment)
-        (plain_value)
-        (integer_value (unit))
-        (integer_value (unit)))))
-      (declaration (property_name) (call_expression (function_name) (arguments
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))))))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (number)
+                (cssLiteral
+                  (identifier))
+                (comment)
+                (cssLiteral
+                  (identifier))
+                (number)
+                (number)))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))
+              (jssPropertyValue
+                (number)
+                (cssLiteral
+                  (identifier))
+                (number)
+                (cssLiteral
+                  (identifier))
+                (number)
+                (cssLiteral
+                  (identifier))
+                (number)
+                (cssLiteral
+                  (identifier))))))))))
 
-=================================
+================================================================================
 Declarations at the top level
-=================================
+================================================================================
 
 --a-variable: -5px;
 a-property: calc(5px + var(--a-variable));
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (declaration (property_name) (integer_value (unit)))
-  (declaration (property_name) (call_expression (function_name) (arguments (binary_expression (integer_value (unit)) (call_expression (function_name) (arguments (plain_value))))))))
+(program
+  (stylesheetItem
+    (jssPropertyDefinition
+      (jssPropertyName
+        (cssLiteral
+          (identifier))
+        (cssLiteral
+          (identifier)))
+      (jssPropertyValue
+        (number)
+        (cssLiteral
+          (identifier)))))
+  (empty_statement)
+  (stylesheetItem
+    (jssPropertyDefinition
+      (jssPropertyName
+        (cssLiteral
+          (identifier))
+        (cssLiteral
+          (identifier)))
+      (jssPropertyValue
+        (cssLiteral
+          (identifier))
+        (jssPropertyValue
+          (number)
+          (cssLiteral
+            (identifier))
+          (jssPropertyValue
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))))
+  (empty_statement))
 
-=============================================
+================================================================================
 Spaces after colons in property declarations
-=============================================
+================================================================================
 
 div {
   margin      : 0;
   padding     : 0;
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors
-      (tag_name))
-    (block
-      (declaration
-        (property_name)
-        (integer_value))
-      (declaration
-        (property_name)
-        (integer_value)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number))))
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number))))))))

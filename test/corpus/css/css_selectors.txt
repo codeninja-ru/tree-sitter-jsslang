@@ -1,147 +1,346 @@
-=========================
+================================================================================
 Universal selectors
-=========================
+================================================================================
 
 * {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set (selectors (universal_selector)) (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName)))
+      (block))))
 
-=========================
+================================================================================
 Type selectors
-=========================
+================================================================================
 
 div, span {}
 h1, h2, h3, h4 {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set (selectors (tag_name) (tag_name)) (block))
-  (rule_set (selectors (tag_name) (tag_name) (tag_name) (tag_name)) (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-=========================
+================================================================================
 Class selectors
-=========================
+================================================================================
 
 .class-a {}
 div.class-b, .class-c.class-d {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (class_selector (class_name)))
-    (block))
-  (rule_set
-    (selectors
-      (class_selector (tag_name) (class_name))
-      (class_selector (class_selector (class_name)) (class_name)))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier))))
+        (simpleSelector
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-=========================
+================================================================================
 Id selectors
-=========================
+================================================================================
 
 #some-id, a#another-id {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (id_selector (id_name)) (id_selector (tag_name) (id_name)))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (hash)
+          (hash
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier))))
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (hash)
+          (hash
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-=========================
+================================================================================
 Attribute selectors
-=========================
+================================================================================
 
 [a] {}
 [b=c] {}
 [d~=e] {}
 a[b] {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set (selectors (attribute_selector (attribute_name))) (block))
-  (rule_set (selectors (attribute_selector (attribute_name) (plain_value))) (block))
-  (rule_set (selectors (attribute_selector (attribute_name) (plain_value))) (block))
-  (rule_set (selectors (attribute_selector (tag_name) (attribute_name))) (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (attrib)
+          (attribute_name
+            (cssLiteral
+              (identifier)))
+          (attrib)))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (attrib)
+          (attribute_name
+            (cssLiteral
+              (identifier)))
+          (attrib)
+          (attrib
+            (plain_value
+              (cssLiteral
+                (identifier))))
+          (attrib)))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (attrib)
+          (attribute_name
+            (cssLiteral
+              (identifier)))
+          (attrib)
+          (attrib
+            (plain_value
+              (cssLiteral
+                (identifier))))
+          (attrib)))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (attrib)
+          (attribute_name
+            (cssLiteral
+              (identifier)))
+          (attrib)))
+      (block))))
 
-=========================
+================================================================================
 Pseudo-class selectors
-=========================
+================================================================================
 
 a:hover {}
 :nth-child(2) {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (pseudo_class_selector (tag_name) (class_name)))
-    (block))
-  (rule_set
-    (selectors (pseudo_class_selector (class_name) (arguments (integer_value))))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier)
+              (identifier)))
+          (pseudo)
+          (pseudo)
+          (pseudo)))
+      (block))))
 
-=========================
+================================================================================
 Pseudo-element selectors
-=========================
+================================================================================
 
 a::first-line {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (pseudo_element_selector (tag_name) (tag_name)))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-=========================
+================================================================================
 Child selectors
-=========================
+================================================================================
 
 a > b {}
 c > d > e {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (child_selector (tag_name) (tag_name)))
-    (block))
-  (rule_set
-    (selectors (child_selector
-      (child_selector (tag_name) (tag_name))
-      (tag_name)))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (combinator)
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (combinator)
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))))
+        (combinator)
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-=========================
+================================================================================
 Descendant selectors
-=========================
+================================================================================
 
 a b {}
 c d e {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (descendant_selector (tag_name) (tag_name)))
-    (block))
-  (rule_set
-    (selectors (descendant_selector
-      (descendant_selector (tag_name) (tag_name))
-      (tag_name)))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-===========================
+================================================================================
 Nesting selectors
-===========================
+================================================================================
 
 a {
   &.b {}
@@ -149,56 +348,145 @@ a {
   & > d {}
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (tag_name))
-    (block
-      (rule_set (selectors (class_selector (nesting_selector) (class_name))) (block))
-      (rule_set (selectors (descendant_selector (nesting_selector) (tag_name))) (block))
-      (rule_set (selectors (child_selector (nesting_selector) (tag_name))) (block)))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))))
+      (block
+        (rule_set
+          (selectors
+            (simpleSelector
+              (elementName)
+              (cssClass)
+              (cssClass
+                (cssLiteral
+                  (identifier)))))
+          (block))
+        (rule_set
+          (selectors
+            (simpleSelector
+              (elementName))
+            (simpleSelector
+              (elementName
+                (cssLiteral
+                  (identifier)))))
+          (block))
+        (rule_set
+          (selectors
+            (simpleSelector
+              (elementName))
+            (combinator)
+            (simpleSelector
+              (elementName
+                (cssLiteral
+                  (identifier)))))
+          (block))))))
 
-===========================
+================================================================================
 Sibling selectors
-===========================
+================================================================================
 
 a.b ~ c.d {}
 .e.f + .g.h {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (sibling_selector
-      (class_selector (tag_name) (class_name))
-      (class_selector (tag_name) (class_name))))
-    (block))
-  (rule_set
-    (selectors (adjacent_sibling_selector
-      (class_selector (class_selector (class_name)) (class_name))
-      (class_selector (class_selector (class_name)) (class_name))))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier))))
+        (combinator)
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier)))))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier)))
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier))))
+        (combinator)
+        (simpleSelector
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier)))
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier)))))
+      (block))))
 
-===========================
+================================================================================
 The :not selector
-===========================
+================================================================================
 
 a:not(:hover) {}
 .b:not(c > .d) {}
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (pseudo_class_selector
-      (tag_name)
-      (class_name)
-      (arguments (pseudo_class_selector (class_name)))))
-    (block))
-  (rule_set
-    (selectors (pseudo_class_selector
-      (class_selector (class_name))
-      (class_name)
-      (arguments (child_selector (tag_name) (class_selector (class_name))))))
-    (block)))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (elementName
+            (cssLiteral
+              (identifier)))
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier)))
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier)))
+          (pseudo)))
+      (block)))
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (cssClass)
+          (cssClass
+            (cssLiteral
+              (identifier)))
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier)))
+          (pseudo)
+          (pseudo
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))
+          (pseudo)))
+      (block))))

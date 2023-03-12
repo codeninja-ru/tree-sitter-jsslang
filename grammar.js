@@ -42,6 +42,18 @@ module.exports = grammar({
     [$.member_expression, $.jssSpreadDefinition],
     [$.update_expression, $.jssSpreadDefinition],
 
+    [$.primary_expression, $.cssLiteral],
+    [$.labeled_statement, $.cssLiteral],
+    [$.assignment_expression, $.pattern, $.cssLiteral],
+    [$.primary_expression, $.pattern, $.cssLiteral],
+    [$._augmented_assignment_lhs, $.cssLiteral],
+    [$.primary_expression, $._cssLiteralTailIdent],
+    [$.primary_expression, $._cssLiteralTailMinus],
+    [$.decorator_call_expression, $.cssLiteral],
+    [$.assignment_expression, $._cssLiteralTailMinus],
+    [$._augmented_assignment_lhs, $._cssLiteralTailMinus],
+    [$.assignment_expression, $.cssLiteral],
+
   ],
   precedences: $ => [
     ...javascript.precedences($),
@@ -61,9 +73,9 @@ module.exports = grammar({
 
     _identifierJs: $ => { // js identifier without $
       // NOTE: $ symbol in identifier conflicts with string templeates ${}
-      const alpha = /[^\x00-\x1F\s\p{Zs}0-9:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
-      const alphanumeric = /[^\x00-\x1F\s\p{Zs}:$;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/;
-      return token(seq(alpha, repeat(alphanumeric)));
+      const alpha = /[^\x00-\x1F\s\p{Zs}0-9:;`"'@#.,$|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/
+      const alphanumeric = /[^\x00-\x1F\s\p{Zs}:;`"'@#.,$|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/
+      return token(seq(alpha, repeat(alphanumeric)))
     },
     identifier: $ => choice(
       $._identifierNotReserved,
@@ -76,6 +88,7 @@ module.exports = grammar({
     //    '-', //TODO withoud spaces
     //  ),
     //),
+    //
 
     cssLiteral: $ => choice(
       seq(
@@ -88,14 +101,14 @@ module.exports = grammar({
         $._cssLiteralTailMinus,
       ),
       seq(
-        $._identifierNotReserved,
+        $.identifier,
         optional($._cssLiteralTailIdent),
       )
     ),
 
     _cssLiteralTailMinus: $ => seq(
       //$._noSpace,
-      $._identifierNotReserved,
+      $.identifier,
       optional($._cssLiteralTailIdent)
     ),
 
@@ -228,10 +241,26 @@ module.exports = grammar({
           choice(':', '::'),
           seq(
             $._jssIdent,
-            optional(alias($.pseudo_class_arguments, $.arguments))
+            optional(seq(
+              token.immediate(
+                '('
+              ),
+              optional($.any_value),
+              ')'
+            ))
+            //optional(alias($.pseudo_class_arguments, $.arguments))
           )
         ),
         $.pseudo,
+      )
+    ),
+
+    // https://w3c.github.io/csswg-drafts/css-syntax-3/#typedef-any-value
+    any_value: $ => repeat1(
+      choice(
+        $.cssLiteral,
+        /[^()]/,
+        seq('(', optional($.any_value), ')'),
       )
     ),
 
@@ -344,6 +373,7 @@ module.exports = grammar({
         'var', 'and', 'or', 'not', // allowed literals, this word is reserved by js and is not allowed in cssLiteral
         $.number,
         $.string,
+        $.uri,
         seq('(', $.jssPropertyValue , ')'), //TODO expend on what is inside of ()
         '+', '-', '*', '!', '/', '.', '#', '%', ',', ':', '?', '&'
       )
@@ -354,19 +384,90 @@ module.exports = grammar({
       $.expression,
     ),
 
+    // https://drafts.csswg.org/mediaqueries/#mq-syntax
     media_statement: $ => seq(
       '@media',
-      sep1(',', $._query),
+      //sep1(',', $._query),
+      $.media_query_list,
       $.block
     ),
 
+    css_function: $ => seq(
+      $.cssLiteral,
+      token.immediate('('),
+      $.expr,
+      ')'
+    ),
+
+    term: $ => choice(
+      $.integer_value,
+      $.float_value,
+      $.string,
+      $.cssLiteral,
+      $.uri,
+      $.color_value,
+      $.css_function,
+    ),
+
+    expr: $ => seq(
+      $.term,
+      repeat(
+        seq(
+          choice('/', ','),
+          $.term,
+        )
+      )
+    ),
+
+    jss_expression: $ => seq(
+      '(',
+      alias($.cssLiteral, $.media_feature),
+      optional(
+        seq(
+          ':',
+          $.expr,
+        )
+      ),
+      ')'
+    ),
+
+    media_query: $ => choice(
+      seq(
+        optional(choice('not', 'only')),
+        alias($.cssLiteral, $.media_type),
+        repeat(
+          seq(
+            'and',
+            $.jss_expression
+          )
+        )
+      ),
+      seq(
+        $.jss_expression,
+        repeat(
+          seq(
+            'and',
+            $.jss_expression
+          )
+        )
+      )
+    ),
+
+    media_query_list: $ => sep1(",", $.media_query),
+
+    uri: $ => seq(
+      'url',
+      token.immediate('('),
+      choice($.string, /[^)]*/),
+      ')'
+    ),
 
     //css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
     css_identifier: $ => $.cssLiteral,
 
     _value: $ => prec(-1, choice(
       alias($.css_identifier, $.plain_value),
-      $.plain_value,
+      $.uri,
       $.color_value,
       $.integer_value,
       $.float_value,
@@ -387,6 +488,7 @@ module.exports = grammar({
         /\/[^\*\s,;!{}()\[\]]/ // Slash not followed by a '*' (which would be a comment)
       ))
     )),
+
     color_value: $ => seq('#', token.immediate(/[0-9a-fA-F]{3,8}/)),
     integer_value: $ => seq(
       token(seq(
@@ -449,7 +551,7 @@ module.exports = grammar({
     namespace_statement: $ => seq(
       '@namespace',
       optional(alias($.css_identifier, $.namespace_name)),
-      choice($.string, $.css_call_expression),
+      choice($.string, $.uri),
       ';'
     ),
 

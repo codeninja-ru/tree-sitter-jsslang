@@ -89,6 +89,9 @@ const int32_t KEYWORDS[][MAX_KEYWORD_SIZE] = {
   L"not",
   L"or",
   L"selector",
+  L"url",
+  L"only",
+  L"and",
 };
 
 static bool is_keyword(int32_t *token) {

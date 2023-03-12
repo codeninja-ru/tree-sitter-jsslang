@@ -1,15 +1,33 @@
-============================
+================================================================================
 Rule sets
-============================
+================================================================================
 
 #some-id {
   some-property: 5px;
 }
 
----
+--------------------------------------------------------------------------------
 
-(stylesheet
-  (rule_set
-    (selectors (id_selector (id_name)))
-    (block
-      (declaration (property_name) (integer_value (unit))))))
+(program
+  (stylesheetItem
+    (rule_set
+      (selectors
+        (simpleSelector
+          (hash)
+          (hash
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
+      (block
+        (jssDeclaration
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (number)
+              (cssLiteral
+                (identifier)))))))))

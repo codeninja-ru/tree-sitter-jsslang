@@ -22,42 +22,54 @@ div a {
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral)
-            (cssLiteral))
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))
           (pseudo)
           (pseudo
-            (cssLiteral))
+            (cssLiteral
+              (identifier)))
           (attrib)
           (attribute_name
-            (cssLiteral))
+            (cssLiteral
+              (identifier)))
           (attrib)
           (attrib
             (plain_value
-              (cssLiteral)))
+              (cssLiteral
+                (identifier))))
           (attrib)))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral)))))))
+              (cssLiteral
+                (identifier))))))))
   (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
           (elementName
-            (cssLiteral)
-            (cssLiteral))))
+            (cssLiteral
+              (identifier))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))))))
+              (cssLiteral
+                (identifier)))))))))
 
 ================================================================================
 Variables
@@ -95,12 +107,14 @@ ${selector}:hover {
               (identifier)))
           (pseudo)
           (pseudo
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (template_substitution
                 (identifier)))))
@@ -131,14 +145,16 @@ ${selector}:hover {
                 (member_expression
                   (this)
                   (property_identifier)))
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (template_substitution
                 (identifier)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
+              (cssLiteral
+                (identifier))
               (template_substitution
                 (member_expression
                   (this)
@@ -193,14 +209,17 @@ Nesting
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (rule_set
           (selectors
             (simpleSelector
@@ -209,19 +228,25 @@ Nesting
                   (member_expression
                     (this)
                     (property_identifier)))
-                (cssLiteral)
-                (cssLiteral))
+                (cssLiteral
+                  (identifier))
+                (cssLiteral
+                  (identifier)))
               (pseudo)
               (pseudo
-                (cssLiteral))))
+                (cssLiteral
+                  (identifier)))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral)
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
-                  (cssLiteral))))))))))
+                  (cssLiteral
+                    (identifier)))))))))))
 
 ================================================================================
 Literals
@@ -242,34 +267,45 @@ Literals
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))))))
+              (cssLiteral
+                (identifier)))))))))
 
 ================================================================================
 Jss Block Variables
@@ -291,25 +327,31 @@ const hidden = @block { display: none; };
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral)))))))
+              (cssLiteral
+                (identifier))))))))
   (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssSpreadDefinition
             (identifier)))))))
@@ -344,13 +386,16 @@ const clearfix = @block {
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (template_substitution
                 (member_expression
@@ -366,43 +411,53 @@ const clearfix = @block {
                     (property_identifier))))
               (pseudo)
               (pseudo
-                (cssLiteral))))
+                (cssLiteral
+                  (identifier)))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
                   (string
                     (string_fragment)))))
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
-                  (cssLiteral))))
+                  (cssLiteral
+                    (identifier)))))
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
-                  (cssLiteral)))))))))
+                  (cssLiteral
+                    (identifier))))))))))
   (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssSpreadDefinition
             (identifier))))))
@@ -412,16 +467,20 @@ const clearfix = @block {
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssSpreadDefinition
             (identifier)))))))
@@ -459,85 +518,107 @@ Media Queries
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral)))))))
+              (cssLiteral
+                (identifier))))))))
   (stylesheetItem
     (media_statement
-      (feature_query
-        (feature_name
-          (cssLiteral))
-        (integer_value)
-        (plain_value
-          (cssLiteral)))
+      (media_query_list
+        (media_query
+          (jss_expression
+            (media_feature
+              (identifier)
+              (identifier))
+            (expr
+              (term
+                (integer_value
+                  (unit)))))))
       (block
         (rule_set
           (selectors
             (simpleSelector
               (cssClass)
               (cssClass
-                (cssLiteral))))
+                (cssLiteral
+                  (identifier)))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
                   (number)
-                  (cssLiteral))))))
+                  (cssLiteral
+                    (identifier)))))))
         (media_statement
-          (feature_query
-            (feature_name
-              (cssLiteral))
-            (integer_value)
-            (plain_value
-              (cssLiteral)))
+          (media_query_list
+            (media_query
+              (jss_expression
+                (media_feature
+                  (identifier)
+                  (identifier))
+                (expr
+                  (term
+                    (integer_value
+                      (unit)))))))
           (block
             (rule_set
               (selectors
                 (simpleSelector
                   (cssClass)
                   (cssClass
-                    (cssLiteral))))
+                    (cssLiteral
+                      (identifier)))))
               (block
                 (jssDeclaration
                   (jssPropertyDefinition
                     (jssPropertyName
-                      (cssLiteral)
-                      (cssLiteral))
+                      (cssLiteral
+                        (identifier))
+                      (cssLiteral
+                        (identifier)))
                     (jssPropertyValue
-                      (cssLiteral)
-                      (parenthesized_value
-                        (plain_value))))))))))))
+                      (uri)))))))))))
   (stylesheetItem
     (media_statement
-      (feature_query
-        (feature_name
-          (cssLiteral))
-        (integer_value)
-        (plain_value
-          (cssLiteral)))
+      (media_query_list
+        (media_query
+          (jss_expression
+            (media_feature
+              (identifier)
+              (identifier))
+            (expr
+              (term
+                (integer_value
+                  (unit)))))))
       (block
         (rule_set
           (selectors
             (simpleSelector
               (cssClass)
               (cssClass
-                (cssLiteral))))
+                (cssLiteral
+                  (identifier)))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
                   (number)
-                  (cssLiteral))))))))))
+                  (cssLiteral
+                    (identifier)))))))))))
 
 ================================================================================
 Media Queries nested
@@ -563,62 +644,81 @@ Media Queries nested
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (media_statement
-          (feature_query
-            (feature_name
-              (cssLiteral))
-            (integer_value)
-            (plain_value
-              (cssLiteral)))
+          (media_query_list
+            (media_query
+              (jss_expression
+                (media_feature
+                  (identifier)
+                  (identifier))
+                (expr
+                  (term
+                    (integer_value
+                      (unit)))))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
                   (number)
-                  (cssLiteral))))
+                  (cssLiteral
+                    (identifier)))))
             (media_statement
-              (feature_query
-                (feature_name
-                  (cssLiteral))
-                (integer_value)
-                (plain_value
-                  (cssLiteral)))
+              (media_query_list
+                (media_query
+                  (jss_expression
+                    (media_feature
+                      (identifier)
+                      (identifier))
+                    (expr
+                      (term
+                        (integer_value
+                          (unit)))))))
               (block
                 (jssDeclaration
                   (jssPropertyDefinition
                     (jssPropertyName
-                      (cssLiteral)
-                      (cssLiteral))
+                      (cssLiteral
+                        (identifier))
+                      (cssLiteral
+                        (identifier)))
                     (jssPropertyValue
-                      (cssLiteral)
-                      (parenthesized_value
-                        (plain_value)))))))))
+                      (uri))))))))
         (media_statement
-          (feature_query
-            (feature_name
-              (cssLiteral))
-            (integer_value)
-            (plain_value
-              (cssLiteral)))
+          (media_query_list
+            (media_query
+              (jss_expression
+                (media_feature
+                  (identifier)
+                  (identifier))
+                (expr
+                  (term
+                    (integer_value
+                      (unit)))))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
                   (number)
-                  (cssLiteral))))))))))
+                  (cssLiteral
+                    (identifier)))))))))))
 
 ================================================================================
 Scoped variables
@@ -641,7 +741,8 @@ Scoped variables
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (lexical_declaration
           (variable_declarator
@@ -656,19 +757,24 @@ Scoped variables
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
-                  (cssLiteral))))))
+                  (cssLiteral
+                    (identifier)))))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (template_substitution
                 (identifier)))))
@@ -699,34 +805,35 @@ At Rules
 (program
   (stylesheetItem
     (at_rule
-      (cssLiteral)
+      (cssLiteral
+        (identifier)
+        (identifier))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral)
-              (cssLiteral))
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (string
                 (string_fragment)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
-              (cssLiteral)
+              (uri)
+              (cssLiteral
+                (identifier))
               (jssPropertyValue
                 (string
                   (string_fragment)))
-              (cssLiteral)
-              (jssPropertyValue
-                (string
-                  (string_fragment)))
-              (cssLiteral)
-              (jssPropertyValue
-                (string
-                  (string_fragment)))
-              (cssLiteral)
+              (uri)
+              (cssLiteral
+                (identifier))
               (jssPropertyValue
                 (string
                   (string_fragment)))))))))
@@ -736,39 +843,49 @@ At Rules
         (simpleSelector
           (cssClass)
           (cssClass
-            (cssLiteral))))
+            (cssLiteral
+              (identifier)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral))
+              (cssLiteral
+                (identifier)))
             (jssPropertyValue
               (number)
-              (cssLiteral))))
+              (cssLiteral
+                (identifier)))))
         (lexical_declaration
           (variable_declarator
             (identifier)
             (string
               (string_fragment))))
         (media_statement
-          (keyword_query
-            (cssLiteral))
+          (media_query_list
+            (media_query
+              (media_type
+                (identifier))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral))
+                  (cssLiteral
+                    (identifier)))
                 (jssPropertyValue
                   (number)
-                  (cssLiteral))))
+                  (cssLiteral
+                    (identifier)))))
             (media_statement
-              (keyword_query
-                (cssLiteral))
+              (media_query_list
+                (media_query
+                  (media_type
+                    (identifier))))
               (block
                 (jssDeclaration
                   (jssPropertyDefinition
                     (jssPropertyName
-                      (cssLiteral))
+                      (cssLiteral
+                        (identifier)))
                     (jssPropertyValue
                       (template_substitution
                         (call_expression
@@ -791,7 +908,8 @@ At Rules
                 (jssDeclaration
                   (jssPropertyDefinition
                     (jssPropertyName
-                      (cssLiteral))
+                      (cssLiteral
+                        (identifier)))
                     (jssPropertyValue
                       (template_substitution
                         (identifier)))))))))))))
