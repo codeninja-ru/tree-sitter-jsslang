@@ -169,9 +169,8 @@ a[b] {}
               (identifier)))
           (attrib)
           (attrib
-            (plain_value
-              (cssLiteral
-                (identifier))))
+            (cssLiteral
+              (identifier)))
           (attrib)))
       (block)))
   (stylesheetItem
@@ -184,9 +183,8 @@ a[b] {}
               (identifier)))
           (attrib)
           (attrib
-            (plain_value
-              (cssLiteral
-                (identifier))))
+            (cssLiteral
+              (identifier)))
           (attrib)))
       (block)))
   (stylesheetItem

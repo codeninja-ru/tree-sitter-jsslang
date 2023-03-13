@@ -24,12 +24,8 @@ module.exports = grammar({
     [$._cssLiteralTailMinus],
     [$.cssLiteral],
     [$._rest],
-    [$.cssLiteral, $.css_binary_expression],
     [$.simpleSelector, $.jssPropertyName],
     [$.simpleSelector, $.css_identifier],
-    [$.pseudo_class_arguments, $.css_binary_expression],
-    [$.css_arguments, $.css_binary_expression],
-    [$.css_binary_expression, $.feature_query],
     [$.jssPropertyValue, $.css_identifier],
     [$.identifier, $._cssLiteralTailMinus],
     [$.cssLiteral, $._cssLiteralTailMinus],
@@ -81,14 +77,6 @@ module.exports = grammar({
       $._identifierNotReserved,
       $._identifierJs,
     ),
-
-    //cssLiteral: $ => repeat1(
-    //  choice(
-    //    $._identifierNotReserved,
-    //    '-', //TODO withoud spaces
-    //  ),
-    //),
-    //
 
     cssLiteral: $ => choice(
       seq(
@@ -160,51 +148,17 @@ module.exports = grammar({
       ),
     ),
 
-    //_jssSelector: $ => choice(
-    //  $.universal_selector,
-    //  alias($._jssIdent, $.tag_name),
-    //  $.class_selector,
-    //  $.nesting_selector,
-    //  $.pseudo_class_selector,
-    //  $.pseudo_element_selector,
-    //  $.id_selector,
-    //  $.attribute_selector,
-    //  $.string,
-    //  $.child_selector,
-    //  $.descendant_selector,
-    //  $.sibling_selector,
-    //  $.adjacent_sibling_selector
-    //),
-
-    // jss way declaration
-
-    //_jssSelector: $ => sep1(
-    //  optional(
-    //    $.combinator,
-    //  ),
-    //  $.simpleSelector,
-    //),
-
     _jssSelector: $ => prec.right(seq(
       $.simpleSelector,
       optional($.combinator),
       optional($._jssSelector),
     )),
 
-    //_jssSelector: $ => seq(
-    //  choice(
-    //    $._jssSelector,
-    //    $.simpleSelector,
-    //  ),
-    //  optional($.combinator),
-    //  $.simpleSelector,
-    //),
-
     simpleSelector: $ => prec.right(choice(
       repeat1($._rest),
       seq(
         alias(
-          choice($._jssIdent, $.nesting_selector, $.universal_selector),
+          choice($._jssIdent, '&', '*'),
           $.elementName,
         ),
         repeat($._rest),
@@ -230,7 +184,7 @@ module.exports = grammar({
           alias($._jssIdent, $.attribute_name),
           optional(seq(
             choice('=', '~=', '^=', '|=', '*=', '$='),
-            $._value
+            $.any_value
           )),
           ']'
         ),
@@ -248,7 +202,6 @@ module.exports = grammar({
               optional($.any_value),
               ')'
             ))
-            //optional(alias($.pseudo_class_arguments, $.arguments))
           )
         ),
         $.pseudo,
@@ -264,63 +217,6 @@ module.exports = grammar({
       )
     ),
 
-    // END jss way ends
-
-    nesting_selector: $ => '&',
-
-    universal_selector: $ => '*',
-
-    class_selector: $ => prec(1, seq(
-      optional($._jssSelector),
-      '.',
-      alias($._jssIdent, $.class_name),
-    )),
-
-    pseudo_class_selector: $ => seq(
-      optional($._jssSelector),
-      ':',
-      alias($._jssIdent, $.class_name),
-      optional(alias($.pseudo_class_arguments, $.arguments))
-    ),
-
-    pseudo_element_selector: $ => seq(
-      optional($._jssSelector),
-      '::',
-      alias($._jssIdent, $.tag_name)
-    ),
-
-    id_selector: $ => seq(
-      optional($._jssSelector),
-      '#',
-      alias($._jssIdent, $.id_name)
-    ),
-
-    attribute_selector: $ => seq(
-      optional($._jssSelector),
-      '[',
-      alias($._jssIdent, $.attribute_name),
-      optional(seq(
-        choice('=', '~=', '^=', '|=', '*=', '$='),
-        $._value
-      )),
-      ']'
-    ),
-
-    child_selector: $ => prec.left(seq($._jssSelector, '>', $._jssSelector)),
-
-    //descendant_selector: $ => prec.left(seq($._jssSelector, $._descendant_operator, $._jssSelector)),
-    //descendant_selector: $ => repeat1($._jssSelector),
-
-    sibling_selector: $ => prec.left(seq($._jssSelector, '~', $._jssSelector)),
-
-    adjacent_sibling_selector: $ => prec.left(seq($._jssSelector, '+', $._jssSelector)),
-
-    pseudo_class_arguments: $ => seq(
-      token.immediate('('),
-      sep(',', choice($._jssSelector, repeat1($._value))),
-      ')'
-    ),
-
     block: $ => seq('{',
       repeat($._jssBlockStatmentItem),
       '}'
@@ -329,19 +225,12 @@ module.exports = grammar({
     _jssBlockStatmentItem: $ => choice(
       $.rule_set,
       $.jssDeclaration,
-      //$.import_statement,
       $.media_statement,
       $.jssVariableStatement,
-      //$.charset_statement,
-      //$.namespace_statement,
-      //$.keyframes_statement,
       $.supports_statement,
       $.at_rule,
-
-      //toRawNode(parseJsVarStatement),
       $.lexical_declaration,
       $.variable_declaration,
-      //toRawNode(functionExpression),
       $.function_declaration,
     ),
 
@@ -370,7 +259,6 @@ module.exports = grammar({
       choice(
         $.template_substitution,
         $.cssLiteral,
-        'var', 'and', 'or', 'not', // allowed literals, this word is reserved by js and is not allowed in cssLiteral
         $.number,
         $.string,
         $.uri,
@@ -387,7 +275,6 @@ module.exports = grammar({
     // https://drafts.csswg.org/mediaqueries/#mq-syntax
     media_statement: $ => seq(
       '@media',
-      //sep1(',', $._query),
       $.media_query_list,
       $.block
     ),
@@ -468,32 +355,7 @@ module.exports = grammar({
       ')'
     ),
 
-    //css_identifier: $ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
     css_identifier: $ => $.cssLiteral,
-
-    _value: $ => prec(-1, choice(
-      alias($.css_identifier, $.plain_value),
-      $.uri,
-      $.color_value,
-      $.integer_value,
-      $.float_value,
-      $.string,
-      $.css_binary_expression,
-      $.parenthesized_value,
-      $.css_call_expression
-    )),
-
-    plain_value: $ => token(seq(
-      repeat(choice(
-        /[-_]/,
-        /\/[^\*\s,;!{}()\[\]]/ // Slash not followed by a '*' (which would be a comment)
-      )),
-      /[a-zA-Z]/,
-      repeat(choice(
-        /[^/\s,;!{}()\[\]]/,   // Not a slash, not a delimiter character
-        /\/[^\*\s,;!{}()\[\]]/ // Slash not followed by a '*' (which would be a comment)
-      ))
-    )),
 
     color_value: $ => seq('#', token.immediate(/[0-9a-fA-F]{3,8}/)),
     integer_value: $ => seq(
@@ -518,28 +380,6 @@ module.exports = grammar({
     ),
 
     unit: $ => token.immediate(/[a-zA-Z%]+/),
-
-    parenthesized_value: $ => seq(
-      '(',
-      $._value,
-      ')'
-    ),
-    css_call_expression: $ => seq(
-      alias($.css_identifier, $.css_function_name),
-      $.css_arguments
-    ),
-
-    css_arguments: $ => seq(
-      token.immediate('('),
-      sep(choice(',', ';'), repeat1($._value)),
-      ')'
-    ),
-
-    css_binary_expression: $ => prec.left(seq(
-      $._value,
-      choice('+', '-', '*', '/'),
-      $._value
-    )),
 
     css_import_statement: $ => seq(
       '@import',
@@ -634,15 +474,6 @@ module.exports = grammar({
 
     // Media queries
 
-    _query: $ => choice(
-      alias($.css_identifier, $.keyword_query),
-      $.feature_query,
-      $.binary_query,
-      $.unary_query,
-      $.selector_query,
-      $.parenthesized_query
-    ),
-
     feature_query: $ => seq(
       '(',
       alias($.css_identifier, $.feature_name),
@@ -650,31 +481,6 @@ module.exports = grammar({
       repeat1($.jssPropertyValue),
       ')'
     ),
-
-    parenthesized_query: $ => seq(
-      '(',
-      $._query,
-      ')'
-    ),
-
-    binary_query: $ => prec.left(seq(
-      $._query,
-      choice('and', 'or'),
-      $._query
-    )),
-
-    unary_query: $ => prec(1, seq(
-      choice('not', 'only'),
-      $._query
-    )),
-
-    selector_query: $ => seq(
-      'selector',
-      '(',
-      $._jssSelector,
-      ')'
-    ),
-
 
     // jsx fix
     _jsx_identifier: $ => choice(

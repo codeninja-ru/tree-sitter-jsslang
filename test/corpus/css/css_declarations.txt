@@ -517,6 +517,8 @@ a-property: calc(5px + var(--a-variable));
           (number)
           (cssLiteral
             (identifier))
+          (cssLiteral
+            (identifier))
           (jssPropertyValue
             (cssLiteral
               (identifier))

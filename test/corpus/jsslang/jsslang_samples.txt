@@ -36,9 +36,8 @@ div a {
               (identifier)))
           (attrib)
           (attrib
-            (plain_value
-              (cssLiteral
-                (identifier))))
+            (cssLiteral
+              (identifier)))
           (attrib)))
       (block
         (jssDeclaration
