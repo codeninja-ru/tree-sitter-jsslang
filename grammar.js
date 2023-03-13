@@ -437,7 +437,10 @@ module.exports = grammar({
         alias($.cssLiteral, $.media_type),
         repeat(
           seq(
-            'and',
+            choice(
+              'and',
+              'or',
+            ),
             $.jss_expression
           )
         )
@@ -446,7 +449,10 @@ module.exports = grammar({
         $.jss_expression,
         repeat(
           seq(
-            'and',
+            choice(
+              'and',
+              'or',
+            ),
             $.jss_expression
           )
         )
@@ -537,14 +543,19 @@ module.exports = grammar({
 
     css_import_statement: $ => seq(
       '@import',
-      $._value,
-      sep(',', $._query),
+      choice(
+        $.string,
+        $.uri,
+      ),
+      optional(
+        alias($.media_query_list, $.query_list),
+      ),
       ';'
     ),
 
     charset_statement: $ => seq(
       '@charset',
-      $._value,
+      $.string,
       ';'
     ),
 
@@ -580,8 +591,33 @@ module.exports = grammar({
 
     supports_statement: $ => seq(
       '@supports',
-      $._query,
+      $.supports_condition,
       $.block
+    ),
+
+    // https://w3c.github.io/csswg-drafts/css-conditional-3/#typedef-supports-decl
+    supports_condition: $ => seq(
+      optional('not'),
+      $.supports_in_parens,
+      repeat(
+        seq(
+          choice('and', 'or'),
+          $.supports_in_parens,
+        )
+      )
+    ),
+
+    supports_in_parens: $ => choice(
+      seq('(', $.supports_condition, ')'),
+      seq('(', $.jssPropertyDefinition, ')'),
+      alias(seq($.cssLiteral, '(', optional($.any_value), ')'), $.general_enclosed),
+    ),
+
+    general_enclosed: $ => seq(
+      optional($.cssLiteral),
+      '(',
+      optional($.any_value),
+      ')'
     ),
 
     at_keyword: $ => /[a-zA-Z-_]+/,
@@ -590,7 +626,9 @@ module.exports = grammar({
       '@',
       //$.at_keyword,
       $.cssLiteral,
-      sep(',', $._query),
+      optional(
+        alias($.media_query_list, $.query_list),
+      ),
       choice(';', $.block)
     ),
 

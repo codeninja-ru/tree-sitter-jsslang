@@ -550,10 +550,6 @@
       "required": true,
       "types": [
         {
-          "type": "binary_query",
-          "named": true
-        },
-        {
           "type": "block",
           "named": true
         },
@@ -562,23 +558,7 @@
           "named": true
         },
         {
-          "type": "feature_query",
-          "named": true
-        },
-        {
-          "type": "keyword_query",
-          "named": true
-        },
-        {
-          "type": "parenthesized_query",
-          "named": true
-        },
-        {
-          "type": "selector_query",
-          "named": true
-        },
-        {
-          "type": "unary_query",
+          "type": "query_list",
           "named": true
         }
       ]
@@ -1082,39 +1062,7 @@
       "required": true,
       "types": [
         {
-          "type": "color_value",
-          "named": true
-        },
-        {
-          "type": "css_binary_expression",
-          "named": true
-        },
-        {
-          "type": "css_call_expression",
-          "named": true
-        },
-        {
-          "type": "float_value",
-          "named": true
-        },
-        {
-          "type": "integer_value",
-          "named": true
-        },
-        {
-          "type": "parenthesized_value",
-          "named": true
-        },
-        {
-          "type": "plain_value",
-          "named": true
-        },
-        {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "uri",
           "named": true
         }
       ]
@@ -1527,59 +1475,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_query",
-          "named": true
-        },
-        {
-          "type": "color_value",
-          "named": true
-        },
-        {
-          "type": "css_binary_expression",
-          "named": true
-        },
-        {
-          "type": "css_call_expression",
-          "named": true
-        },
-        {
-          "type": "feature_query",
-          "named": true
-        },
-        {
-          "type": "float_value",
-          "named": true
-        },
-        {
-          "type": "integer_value",
-          "named": true
-        },
-        {
-          "type": "keyword_query",
-          "named": true
-        },
-        {
-          "type": "parenthesized_query",
-          "named": true
-        },
-        {
-          "type": "parenthesized_value",
-          "named": true
-        },
-        {
-          "type": "plain_value",
-          "named": true
-        },
-        {
-          "type": "selector_query",
+          "type": "query_list",
           "named": true
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "unary_query",
           "named": true
         },
         {
@@ -2208,6 +2108,29 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "general_enclosed",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "any_value",
+          "named": true
+        },
+        {
+          "type": "cssLiteral",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3734,6 +3657,21 @@
     }
   },
   {
+    "type": "query_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "media_query",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "regex",
     "named": true,
     "fields": {
@@ -4091,6 +4029,44 @@
     }
   },
   {
+    "type": "supports_condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "supports_in_parens",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "supports_in_parens",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "general_enclosed",
+          "named": true
+        },
+        {
+          "type": "jssPropertyDefinition",
+          "named": true
+        },
+        {
+          "type": "supports_condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "supports_statement",
     "named": true,
     "fields": {},
@@ -4099,31 +4075,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_query",
-          "named": true
-        },
-        {
           "type": "block",
           "named": true
         },
         {
-          "type": "feature_query",
-          "named": true
-        },
-        {
-          "type": "keyword_query",
-          "named": true
-        },
-        {
-          "type": "parenthesized_query",
-          "named": true
-        },
-        {
-          "type": "selector_query",
-          "named": true
-        },
-        {
-          "type": "unary_query",
+          "type": "supports_condition",
           "named": true
         }
       ]

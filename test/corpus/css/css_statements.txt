@@ -14,15 +14,17 @@ Import statements
   (stylesheetItem
     (css_import_statement
       (uri)
-      (keyword_query
-        (cssLiteral
-          (identifier)))))
+      (query_list
+        (media_query
+          (media_type
+            (identifier))))))
   (stylesheetItem
     (css_import_statement
       (uri)
-      (keyword_query
-        (cssLiteral
-          (identifier)))))
+      (query_list
+        (media_query
+          (media_type
+            (identifier))))))
   (stylesheetItem
     (css_import_statement
       (string
@@ -34,9 +36,10 @@ Import statements
     (css_import_statement
       (string
         (string_fragment))
-      (keyword_query
-        (cssLiteral
-          (identifier))))))
+      (query_list
+        (media_query
+          (media_type
+            (identifier)))))))
 
 ================================================================================
 Namespace statements
@@ -244,14 +247,17 @@ Supports statements
 (program
   (stylesheetItem
     (supports_statement
-      (feature_query
-        (feature_name
-          (cssLiteral
-            (identifier)
-            (identifier)))
-        (jssPropertyValue
-          (cssLiteral
-            (identifier))))
+      (supports_condition
+        (supports_in_parens
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))))))
       (block
         (rule_set
           (selectors
@@ -272,66 +278,74 @@ Supports statements
                     (identifier))))))))))
   (stylesheetItem
     (supports_statement
-      (binary_query
-        (feature_query
-          (feature_name
-            (cssLiteral
-              (identifier)
-              (identifier)))
-          (jssPropertyValue
-            (cssLiteral
-              (identifier))))
-        (feature_query
-          (feature_name
-            (cssLiteral
-              (identifier)
-              (identifier)
-              (identifier)))
-          (jssPropertyValue
-            (cssLiteral
-              (identifier)))))
-      (block)))
-  (stylesheetItem
-    (supports_statement
-      (unary_query
-        (parenthesized_query
-          (binary_query
-            (feature_query
-              (feature_name
-                (cssLiteral
-                  (identifier)
-                  (identifier)
-                  (identifier)))
-              (jssPropertyValue
-                (cssLiteral
-                  (identifier))))
-            (feature_query
-              (feature_name
-                (cssLiteral
-                  (identifier)
-                  (identifier)
-                  (identifier)
-                  (identifier)))
-              (jssPropertyValue
-                (cssLiteral
-                  (identifier)))))))
-      (block)))
-  (stylesheetItem
-    (supports_statement
-      (unary_query
-        (selector_query
-          (simpleSelector
-            (pseudo)
-            (pseudo
-              (cssLiteral
-                (identifier)))
-            (pseudo)
-            (pseudo
+      (supports_condition
+        (supports_in_parens
+          (jssPropertyDefinition
+            (jssPropertyName
               (cssLiteral
                 (identifier))
               (cssLiteral
                 (identifier)))
-            (pseudo))))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier)))))
+        (supports_in_parens
+          (jssPropertyDefinition
+            (jssPropertyName
+              (cssLiteral
+                (identifier)
+                (identifier))
+              (cssLiteral
+                (identifier)))
+            (jssPropertyValue
+              (cssLiteral
+                (identifier))))))
+      (block)))
+  (stylesheetItem
+    (supports_statement
+      (supports_condition
+        (supports_in_parens
+          (supports_condition
+            (supports_in_parens
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (identifier)
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (identifier)))))
+            (supports_in_parens
+              (jssPropertyDefinition
+                (jssPropertyName
+                  (cssLiteral
+                    (identifier)
+                    (identifier)
+                    (identifier))
+                  (cssLiteral
+                    (identifier)))
+                (jssPropertyValue
+                  (cssLiteral
+                    (identifier))))))))
+      (block)))
+  (stylesheetItem
+    (supports_statement
+      (supports_condition
+        (supports_in_parens
+          (general_enclosed
+            (identifier))
+          (general_enclosed)
+          (general_enclosed
+            (cssLiteral
+              (identifier))
+            (any_value
+              (cssLiteral
+                (identifier))
+              (cssLiteral
+                (identifier))))
+          (general_enclosed)))
       (block))))
 
 ================================================================================
