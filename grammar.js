@@ -17,18 +17,11 @@ module.exports = grammar({
   ],
   conflicts: $ => [
     ...javascript.conflicts($),
-    [$.identifier, $.cssLiteral],
-    [$.simpleSelector],
-    [$.unary_expression, $.cssLiteral],
     [$._cssLiteralTailIdent],
     [$._cssLiteralTailMinus],
     [$.cssLiteral],
     [$._rest],
     [$.simpleSelector, $.jssPropertyName],
-    [$.simpleSelector, $.css_identifier],
-    [$.jssPropertyValue, $.css_identifier],
-    [$.identifier, $._cssLiteralTailMinus],
-    [$.cssLiteral, $._cssLiteralTailMinus],
     [$.cssLiteral, $.jssPropertyValue],
     [$.jssPropertyValue],
 

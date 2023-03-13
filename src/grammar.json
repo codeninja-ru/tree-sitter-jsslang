@@ -8299,17 +8299,6 @@
       "_initializer"
     ],
     [
-      "identifier",
-      "cssLiteral"
-    ],
-    [
-      "simpleSelector"
-    ],
-    [
-      "unary_expression",
-      "cssLiteral"
-    ],
-    [
       "_cssLiteralTailIdent"
     ],
     [
@@ -8324,22 +8313,6 @@
     [
       "simpleSelector",
       "jssPropertyName"
-    ],
-    [
-      "simpleSelector",
-      "css_identifier"
-    ],
-    [
-      "jssPropertyValue",
-      "css_identifier"
-    ],
-    [
-      "identifier",
-      "_cssLiteralTailMinus"
-    ],
-    [
-      "cssLiteral",
-      "_cssLiteralTailMinus"
     ],
     [
       "cssLiteral",
