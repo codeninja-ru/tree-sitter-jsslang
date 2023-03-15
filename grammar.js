@@ -141,22 +141,30 @@ module.exports = grammar({
       ),
     ),
 
-    _jssSelector: $ => prec.right(seq(
+    _jssSelector: $ => seq(
       $.simpleSelector,
-      optional($.combinator),
-      optional($._jssSelector),
-    )),
+      repeat(
+        seq(
+          optional($.combinator),
+          $.simpleSelector,
+        )
+      )
+    ),
 
     simpleSelector: $ => prec.right(choice(
       repeat1($._rest),
       seq(
         alias(
-          choice($._jssIdent, '&', '*'),
+          choice($._jssIdent, $.nesting_selector, $.universal_selector),
           $.elementName,
         ),
         repeat($._rest),
       ),
     )),
+
+    nesting_selector: $ => '&',
+
+    universal_selector: $ => '*',
 
     combinator: $ => choice(
       '+', '>', '~'
@@ -273,7 +281,7 @@ module.exports = grammar({
     ),
 
     css_function: $ => seq(
-      $.cssLiteral,
+      alias($.cssLiteral, $.css_function_name),
       token.immediate('('),
       $.expr,
       ')'
@@ -311,16 +319,18 @@ module.exports = grammar({
       ')'
     ),
 
+    and: $ => 'and',
+    or: $ => 'or',
+    not: $ => 'not',
+    only: $ => 'only',
+
     media_query: $ => choice(
       seq(
-        optional(choice('not', 'only')),
+        optional(choice($.not, $.only)),
         alias($.cssLiteral, $.media_type),
         repeat(
           seq(
-            choice(
-              'and',
-              'or',
-            ),
+            choice($.and, $.or),
             $.jss_expression
           )
         )
@@ -329,10 +339,7 @@ module.exports = grammar({
         $.jss_expression,
         repeat(
           seq(
-            choice(
-              'and',
-              'or',
-            ),
+            choice($.and, $.or),
             $.jss_expression
           )
         )
@@ -430,11 +437,11 @@ module.exports = grammar({
 
     // https://w3c.github.io/csswg-drafts/css-conditional-3/#typedef-supports-decl
     supports_condition: $ => seq(
-      optional('not'),
+      optional($.not),
       $.supports_in_parens,
       repeat(
         seq(
-          choice('and', 'or'),
+          choice($.and, $.or),
           $.supports_in_parens,
         )
       )

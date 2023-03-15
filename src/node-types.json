@@ -1202,11 +1202,26 @@
       "required": true,
       "types": [
         {
-          "type": "cssLiteral",
+          "type": "css_function_name",
           "named": true
         },
         {
           "type": "expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "css_function_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -2704,11 +2719,27 @@
       "required": true,
       "types": [
         {
+          "type": "and",
+          "named": true
+        },
+        {
           "type": "jss_expression",
           "named": true
         },
         {
           "type": "media_type",
+          "named": true
+        },
+        {
+          "type": "not",
+          "named": true
+        },
+        {
+          "type": "only",
+          "named": true
+        },
+        {
+          "type": "or",
           "named": true
         }
       ]
@@ -3614,6 +3645,18 @@
       "required": true,
       "types": [
         {
+          "type": "and",
+          "named": true
+        },
+        {
+          "type": "not",
+          "named": true
+        },
+        {
+          "type": "or",
+          "named": true
+        },
+        {
           "type": "supports_in_parens",
           "named": true
         }
@@ -4390,7 +4433,7 @@
   },
   {
     "type": "and",
-    "named": false
+    "named": true
   },
   {
     "type": "as",
@@ -4526,7 +4569,7 @@
   },
   {
     "type": "not",
-    "named": false
+    "named": true
   },
   {
     "type": "null",
@@ -4542,7 +4585,7 @@
   },
   {
     "type": "only",
-    "named": false
+    "named": true
   },
   {
     "type": "optional_chain",
@@ -4550,7 +4593,7 @@
   },
   {
     "type": "or",
-    "named": false
+    "named": true
   },
   {
     "type": "private_property_identifier",

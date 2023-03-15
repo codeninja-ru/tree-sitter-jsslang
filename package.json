@@ -28,6 +28,12 @@
       "file-types": [
         "jss"
       ],
+      "highlights": [
+        "queries/highlights-css.scm",
+        "queries/highlights-jsx.scm",
+        "queries/highlights-params.scm",
+        "queries/highlights.scm"
+      ],
       "injection-regex": "^(jss|jsslang)$"
     }
   ]

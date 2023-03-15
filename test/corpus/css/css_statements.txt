@@ -174,6 +174,7 @@ Media statements
         (media_query
           (media_type
             (identifier))
+          (and)
           (jss_expression
             (media_feature
               (identifier)
@@ -182,6 +183,7 @@ Media statements
               (term
                 (integer_value
                   (unit)))))
+          (and)
           (jss_expression
             (media_feature
               (identifier))
@@ -205,6 +207,7 @@ Media statements
         (media_query
           (media_type
             (identifier))
+          (and)
           (jss_expression
             (media_feature
               (identifier))
@@ -217,8 +220,10 @@ Media statements
     (media_statement
       (media_query_list
         (media_query
+          (not)
           (media_type
             (identifier))
+          (and)
           (jss_expression
             (media_feature
               (identifier)))))
@@ -227,6 +232,7 @@ Media statements
     (media_statement
       (media_query_list
         (media_query
+          (only)
           (media_type
             (identifier))))
       (block))))
@@ -289,6 +295,7 @@ Supports statements
             (jssPropertyValue
               (cssLiteral
                 (identifier)))))
+        (or)
         (supports_in_parens
           (jssPropertyDefinition
             (jssPropertyName
@@ -304,6 +311,7 @@ Supports statements
   (stylesheetItem
     (supports_statement
       (supports_condition
+        (not)
         (supports_in_parens
           (supports_condition
             (supports_in_parens
@@ -317,6 +325,7 @@ Supports statements
                 (jssPropertyValue
                   (cssLiteral
                     (identifier)))))
+            (or)
             (supports_in_parens
               (jssPropertyDefinition
                 (jssPropertyName
@@ -333,6 +342,7 @@ Supports statements
   (stylesheetItem
     (supports_statement
       (supports_condition
+        (not)
         (supports_in_parens
           (general_enclosed
             (identifier))

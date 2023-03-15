@@ -23,12 +23,17 @@ deps:
 	mkdir -p /tmp/css
 	wget https://codeload.github.com/tree-sitter/tree-sitter-css/tar.gz/master -O - | tar -xzv -C /tmp/css --strip=2 "tree-sitter-css-master/corpus"
 	find /tmp/javascript -type f -exec bash -c 'mv $$0 $${0%/*}/javascript_$${0##*/}' {} \;
+	find /tmp/javascript/highlight -type f -exec bash -c 'mv $$0 $${0/.js/.jss}' {} \;
 	find /tmp/css -type f -exec bash -c 'mv $$0 $${0%/*}/css_$${0##*/}' {} \;
 	mkdir -p ./test/corpus/css
 	mkdir -p ./test/corpus/javascript
 	cp -r /tmp/javascript/corpus/* ./test/corpus/javascript
 	cp -r /tmp/javascript/highlight/* ./test/highlight
 	cp -r /tmp/css/* ./test/corpus/css
+
+	mkdir /tmp/queries
+	wget https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/master -O - | tar -xzv -C /tmp/queries --strip=2 "tree-sitter-javascript-master/queries"
+	cp /tmp/queries/* ./queries
 #	rm -rf /tmp/javascript
 #	rm -rf /tmp/css
 
