@@ -43,6 +43,21 @@ module.exports = grammar({
     [$._augmented_assignment_lhs, $._cssLiteralTailMinus],
     [$.assignment_expression, $.cssLiteral],
 
+    [$.simpleSelector, $.jssPropertyName, $.css_identifier],
+    [$._rest, $.css_identifier],
+    [$.cssLiteral, $._cssLiteralTailMinus],
+    [$.css_identifier, $.at_rule],
+    [$.media_query, $.css_identifier],
+    [$.cssLiteral, $.namespace_statement],
+    [$.cssLiteral, $.keyframes_statement],
+    [$.css_identifier, $.supports_in_parens],
+    [$.jss_expression, $.css_identifier],
+    [$.jssPropertyName, $.css_identifier],
+    [$.jssPropertyValue, $.css_identifier],
+    [$.any_value, $.css_identifier],
+
+    [$.identifier, $.identifierCss],
+
   ],
   precedences: $ => [
     ...javascript.precedences($),
@@ -70,6 +85,10 @@ module.exports = grammar({
       $._identifierNotReserved,
       $._identifierJs,
     ),
+    identifierCss: $ => choice(
+      $._identifierNotReserved,
+      $._identifierJs,
+    ),
 
     cssLiteral: $ => choice(
       seq(
@@ -82,14 +101,14 @@ module.exports = grammar({
         $._cssLiteralTailMinus,
       ),
       seq(
-        $.identifier,
+        $.identifierCss,
         optional($._cssLiteralTailIdent),
       )
     ),
 
     _cssLiteralTailMinus: $ => seq(
       //$._noSpace,
-      $.identifier,
+      $.identifierCss,
       optional($._cssLiteralTailIdent)
     ),
 
@@ -195,7 +214,7 @@ module.exports = grammar({
         seq(
           choice(':', '::'),
           seq(
-            $._jssIdent,
+            alias($._jssIdent, $.pseudo_name),
             optional(seq(
               token.immediate(
                 '('
@@ -250,7 +269,7 @@ module.exports = grammar({
     ),
 
     jssPropertyName: $ => choice(
-      $._jssIdent, //NOTE can't containe reserved words
+      alias($._jssIdent, $.property_identifier),
       $.string,
       $.number,
       $.computed_property_name,

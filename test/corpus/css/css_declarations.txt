@@ -15,16 +15,17 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (number)
                 (number)
@@ -49,36 +50,38 @@ div {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)
-                (identifier)
-                (identifier))
+                (identifierCss)
+                (identifierCss)
+                (identifierCss))
               (jssPropertyValue
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (number)
                 (cssLiteral
-                  (identifier))))))
+                  (identifierCss))))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (number)
                 (number)
@@ -115,24 +118,26 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)))))))))
+                (identifierCss)))))))))
 
 ================================================================================
 Numbers
@@ -156,60 +161,66 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (cssLiteral
-                (identifier)))))))))
+                (identifierCss)))))))))
 
 ================================================================================
 Binary arithmetic operators
@@ -230,45 +241,48 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (number)
                 (number)
                 (cssLiteral
-                  (identifier))))))
+                  (identifierCss))))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (number))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (number)
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (jssPropertyValue
                   (number)
                   (number))
@@ -276,10 +290,10 @@ a {
                   (jssPropertyValue
                     (number)
                     (cssLiteral
-                      (identifier))
+                      (identifierCss))
                     (number)
                     (cssLiteral
-                      (identifier)))
+                      (identifierCss)))
                   (jssPropertyValue
                     (number)
                     (number)))))))))))
@@ -302,20 +316,22 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (string))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (string
                 (escape_sequence)
@@ -339,16 +355,17 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (comment)))))
 
 ================================================================================
@@ -368,18 +385,19 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (cssLiteral
-                (identifier)))))))))
+                (identifierCss)))))))))
 
 ================================================================================
 Declarations without trailing semicolons
@@ -399,24 +417,26 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)))))))))
+                (identifierCss)))))))))
 
 ================================================================================
 Comments right after numbers
@@ -436,50 +456,52 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (number)
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (comment)
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (number)
                 (number)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (number)
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (number)
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (number)
                 (cssLiteral
-                  (identifier))
+                  (identifierCss))
                 (number)
                 (cssLiteral
-                  (identifier))))))))))
+                  (identifierCss))))))))))
 
 ================================================================================
 Declarations at the top level
@@ -494,36 +516,38 @@ a-property: calc(5px + var(--a-variable));
   (stylesheetItem
     (jssPropertyDefinition
       (jssPropertyName
-        (cssLiteral
-          (identifier))
-        (cssLiteral
-          (identifier)))
+        (property_identifier
+          (cssLiteral
+            (identifierCss))
+          (cssLiteral
+            (identifierCss))))
       (jssPropertyValue
         (number)
         (cssLiteral
-          (identifier)))))
+          (identifierCss)))))
   (empty_statement)
   (stylesheetItem
     (jssPropertyDefinition
       (jssPropertyName
-        (cssLiteral
-          (identifier))
-        (cssLiteral
-          (identifier)))
+        (property_identifier
+          (cssLiteral
+            (identifierCss))
+          (cssLiteral
+            (identifierCss))))
       (jssPropertyValue
         (cssLiteral
-          (identifier))
+          (identifierCss))
         (jssPropertyValue
           (number)
           (cssLiteral
-            (identifier))
+            (identifierCss))
           (cssLiteral
-            (identifier))
+            (identifierCss))
           (jssPropertyValue
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))))
+              (identifierCss)))))))
   (empty_statement))
 
 ================================================================================
@@ -544,19 +568,21 @@ div {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number))))))))

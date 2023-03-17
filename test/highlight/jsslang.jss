@@ -8,16 +8,16 @@ const block = @block {
 //          ^ operator
 //            ^ keyword
     display: block;
-//  ^ property
+//   ^ property
 }
 
 input.className:hover {
 // ^ tag
 //    ^ property
-//             ^ property
+//              ^ property
     prop-${name}: ${value};
 //    ^ property
-//       ^ template_substitution
-//             ^ punctuation.delimiter
-//                ^ template_substitution
+//        ^ punctuation.special
+//              ^ punctuation.delimiter
+//                 ^ punctuation.special
 }

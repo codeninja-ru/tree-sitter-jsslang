@@ -16,18 +16,19 @@ Rule sets
           (hash)
           (hash
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (number)
               (cssLiteral
-                (identifier)))))))))
+                (identifierCss)))))))))

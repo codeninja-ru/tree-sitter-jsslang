@@ -6443,6 +6443,19 @@
         ]
       }
     },
+    "identifierCss": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_identifierNotReserved"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_identifierJs"
+        }
+      ]
+    },
     "cssLiteral": {
       "type": "CHOICE",
       "members": [
@@ -6487,7 +6500,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "identifier"
+              "name": "identifierCss"
             },
             {
               "type": "CHOICE",
@@ -6510,7 +6523,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "identifier"
+          "name": "identifierCss"
         },
         {
           "type": "CHOICE",
@@ -6952,8 +6965,13 @@
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "SYMBOL",
-                    "name": "_jssIdent"
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_jssIdent"
+                    },
+                    "named": true,
+                    "value": "pseudo_name"
                   },
                   {
                     "type": "CHOICE",
@@ -7153,8 +7171,13 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_jssIdent"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_jssIdent"
+          },
+          "named": true,
+          "value": "property_identifier"
         },
         {
           "type": "SYMBOL",
@@ -8412,6 +8435,59 @@
     [
       "assignment_expression",
       "cssLiteral"
+    ],
+    [
+      "simpleSelector",
+      "jssPropertyName",
+      "css_identifier"
+    ],
+    [
+      "_rest",
+      "css_identifier"
+    ],
+    [
+      "cssLiteral",
+      "_cssLiteralTailMinus"
+    ],
+    [
+      "css_identifier",
+      "at_rule"
+    ],
+    [
+      "media_query",
+      "css_identifier"
+    ],
+    [
+      "cssLiteral",
+      "namespace_statement"
+    ],
+    [
+      "cssLiteral",
+      "keyframes_statement"
+    ],
+    [
+      "css_identifier",
+      "supports_in_parens"
+    ],
+    [
+      "jss_expression",
+      "css_identifier"
+    ],
+    [
+      "jssPropertyName",
+      "css_identifier"
+    ],
+    [
+      "jssPropertyValue",
+      "css_identifier"
+    ],
+    [
+      "any_value",
+      "css_identifier"
+    ],
+    [
+      "identifier",
+      "identifierCss"
     ]
   ],
   "precedences": [

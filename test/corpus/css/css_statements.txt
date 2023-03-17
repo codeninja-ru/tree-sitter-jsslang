@@ -17,14 +17,14 @@ Import statements
       (query_list
         (media_query
           (media_type
-            (identifier))))))
+            (identifierCss))))))
   (stylesheetItem
     (css_import_statement
       (uri)
       (query_list
         (media_query
           (media_type
-            (identifier))))))
+            (identifierCss))))))
   (stylesheetItem
     (css_import_statement
       (string
@@ -39,7 +39,7 @@ Import statements
       (query_list
         (media_query
           (media_type
-            (identifier)))))))
+            (identifierCss)))))))
 
 ================================================================================
 Namespace statements
@@ -73,20 +73,20 @@ Namespace statements
     (namespace_statement
       (namespace_name
         (cssLiteral
-          (identifier)))
+          (identifierCss)))
       (uri)))
   (comment)
   (stylesheetItem
     (namespace_statement
       (namespace_name
         (cssLiteral
-          (identifier)))
+          (identifierCss)))
       (uri)))
   (stylesheetItem
     (namespace_statement
       (namespace_name
         (cssLiteral
-          (identifier)))
+          (identifierCss)))
       (string
         (string_fragment)))))
 
@@ -107,7 +107,7 @@ Keyframes statements
     (keyframes_statement
       (keyframes_name
         (cssLiteral
-          (identifier)))
+          (identifierCss)))
       (keyframe_block_list
         (keyframe_block
           (from)
@@ -115,14 +115,15 @@ Keyframes statements
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral
-                    (identifier))
-                  (cssLiteral
-                    (identifier)))
+                  (property_identifier
+                    (cssLiteral
+                      (identifierCss))
+                    (cssLiteral
+                      (identifierCss))))
                 (jssPropertyValue
                   (number)
                   (cssLiteral
-                    (identifier)))))))
+                    (identifierCss)))))))
         (keyframe_block
           (integer_value
             (unit))
@@ -130,16 +131,17 @@ Keyframes statements
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral
-                    (identifier))
-                  (cssLiteral
-                    (identifier)))
+                  (property_identifier
+                    (cssLiteral
+                      (identifierCss))
+                    (cssLiteral
+                      (identifierCss))))
                 (jssPropertyValue
                   (number)
                   (cssLiteral
-                    (identifier))
+                    (identifierCss))
                   (cssLiteral
-                    (identifier)))))))
+                    (identifierCss)))))))
         (comment)
         (keyframe_block
           (to)
@@ -147,14 +149,15 @@ Keyframes statements
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral
-                    (identifier))
-                  (cssLiteral
-                    (identifier)))
+                  (property_identifier
+                    (cssLiteral
+                      (identifierCss))
+                    (cssLiteral
+                      (identifierCss))))
                 (jssPropertyValue
                   (number)
                   (cssLiteral
-                    (identifier)))))))))))
+                    (identifierCss)))))))))))
 
 ================================================================================
 Media statements
@@ -173,12 +176,12 @@ Media statements
       (media_query_list
         (media_query
           (media_type
-            (identifier))
+            (identifierCss))
           (and)
           (jss_expression
             (media_feature
-              (identifier)
-              (identifier))
+              (identifierCss)
+              (identifierCss))
             (expr
               (term
                 (integer_value
@@ -186,11 +189,11 @@ Media statements
           (and)
           (jss_expression
             (media_feature
-              (identifier))
+              (identifierCss))
             (expr
               (term
                 (cssLiteral
-                  (identifier)))))))
+                  (identifierCss)))))))
       (block)))
   (stylesheetItem
     (media_statement
@@ -198,23 +201,23 @@ Media statements
         (media_query
           (jss_expression
             (media_feature
-              (identifier)
-              (identifier))
+              (identifierCss)
+              (identifierCss))
             (expr
               (term
                 (integer_value
                   (unit))))))
         (media_query
           (media_type
-            (identifier))
+            (identifierCss))
           (and)
           (jss_expression
             (media_feature
-              (identifier))
+              (identifierCss))
             (expr
               (term
                 (cssLiteral
-                  (identifier)))))))
+                  (identifierCss)))))))
       (block)))
   (stylesheetItem
     (media_statement
@@ -222,11 +225,11 @@ Media statements
         (media_query
           (not)
           (media_type
-            (identifier))
+            (identifierCss))
           (and)
           (jss_expression
             (media_feature
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (media_statement
@@ -234,7 +237,7 @@ Media statements
         (media_query
           (only)
           (media_type
-            (identifier))))
+            (identifierCss))))
       (block))))
 
 ================================================================================
@@ -257,56 +260,60 @@ Supports statements
         (supports_in_parens
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))))))
+                (identifierCss))))))
       (block
         (rule_set
           (selectors
             (simpleSelector
               (elementName
                 (cssLiteral
-                  (identifier)))))
+                  (identifierCss)))))
           (block
             (jssDeclaration
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral
-                    (identifier))
-                  (cssLiteral
-                    (identifier)))
+                  (property_identifier
+                    (cssLiteral
+                      (identifierCss))
+                    (cssLiteral
+                      (identifierCss))))
                 (jssPropertyValue
                   (cssLiteral
-                    (identifier))))))))))
+                    (identifierCss))))))))))
   (stylesheetItem
     (supports_statement
       (supports_condition
         (supports_in_parens
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier)))))
+                (identifierCss)))))
         (or)
         (supports_in_parens
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss)
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (cssLiteral
-                (identifier))))))
+                (identifierCss))))))
       (block)))
   (stylesheetItem
     (supports_statement
@@ -317,27 +324,29 @@ Supports statements
             (supports_in_parens
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral
-                    (identifier)
-                    (identifier))
-                  (cssLiteral
-                    (identifier)))
+                  (property_identifier
+                    (cssLiteral
+                      (identifierCss)
+                      (identifierCss))
+                    (cssLiteral
+                      (identifierCss))))
                 (jssPropertyValue
                   (cssLiteral
-                    (identifier)))))
+                    (identifierCss)))))
             (or)
             (supports_in_parens
               (jssPropertyDefinition
                 (jssPropertyName
-                  (cssLiteral
-                    (identifier)
-                    (identifier)
-                    (identifier))
-                  (cssLiteral
-                    (identifier)))
+                  (property_identifier
+                    (cssLiteral
+                      (identifierCss)
+                      (identifierCss)
+                      (identifierCss))
+                    (cssLiteral
+                      (identifierCss))))
                 (jssPropertyValue
                   (cssLiteral
-                    (identifier))))))))
+                    (identifierCss))))))))
       (block)))
   (stylesheetItem
     (supports_statement
@@ -345,16 +354,16 @@ Supports statements
         (not)
         (supports_in_parens
           (general_enclosed
-            (identifier))
+            (identifierCss))
           (general_enclosed)
           (general_enclosed
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (any_value
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (cssLiteral
-                (identifier))))
+                (identifierCss))))
           (general_enclosed)))
       (block))))
 
@@ -387,34 +396,36 @@ Other at-statements
   (stylesheetItem
     (at_rule
       (cssLiteral
-        (identifier)
-        (identifier))
+        (identifierCss)
+        (identifierCss))
       (block
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier))
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (string
                 (string_fragment)))))
         (jssDeclaration
           (jssPropertyDefinition
             (jssPropertyName
-              (cssLiteral
-                (identifier)))
+              (property_identifier
+                (cssLiteral
+                  (identifierCss))))
             (jssPropertyValue
               (uri)
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (string
                   (string_fragment)))
               (uri)
               (cssLiteral
-                (identifier))
+                (identifierCss))
               (jssPropertyValue
                 (string
                   (string_fragment))))))))))

@@ -1,4 +1,4 @@
-eval(js `var foo`)
+eval(jss `var foo`)
 // <- function
 //    ^ function
 //        ^ keyword

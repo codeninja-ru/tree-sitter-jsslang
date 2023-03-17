@@ -24,8 +24,9 @@
 (hash) @property
 (cssClass) @property
 (attribute_name) @property
+(pseudo_name) @property
 ;(feature_name) @property
-(jssPropertyName) @property
+;(jssPropertyName (cssLiteral) @property)
 
 (css_function_name) @function
 

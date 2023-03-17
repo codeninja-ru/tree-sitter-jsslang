@@ -1187,7 +1187,7 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "identifierCss",
           "named": true
         }
       ]
@@ -1221,7 +1221,7 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "identifierCss",
           "named": true
         }
       ]
@@ -1869,7 +1869,7 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "identifierCss",
           "named": true
         }
       ]
@@ -2004,6 +2004,11 @@
   },
   {
     "type": "identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "identifierCss",
     "named": true,
     "fields": {}
   },
@@ -2185,7 +2190,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -2193,19 +2198,15 @@
           "named": true
         },
         {
-          "type": "cssLiteral",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "string",
+          "type": "property_identifier",
           "named": true
         },
         {
-          "type": "template_substitution",
+          "type": "string",
           "named": true
         }
       ]
@@ -2704,7 +2705,7 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "identifierCss",
           "named": true
         }
       ]
@@ -2788,7 +2789,7 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "identifierCss",
           "named": true
         }
       ]
@@ -3258,7 +3259,21 @@
   {
     "type": "property_identifier",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        },
+        {
+          "type": "template_substitution",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "pseudo",
@@ -3272,6 +3287,21 @@
           "type": "any_value",
           "named": true
         },
+        {
+          "type": "cssLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pseudo_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
         {
           "type": "cssLiteral",
           "named": true
@@ -3486,6 +3516,10 @@
         },
         {
           "type": "pseudo",
+          "named": true
+        },
+        {
+          "type": "pseudo_name",
           "named": true
         }
       ]

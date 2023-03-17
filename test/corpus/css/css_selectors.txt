@@ -30,11 +30,11 @@ h1, h2, h3, h4 {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (rule_set
@@ -42,19 +42,19 @@ h1, h2, h3, h4 {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -74,9 +74,9 @@ div.class-b, .class-c.class-d {}
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (rule_set
@@ -84,26 +84,26 @@ div.class-b, .class-c.class-d {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (simpleSelector
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -122,19 +122,19 @@ Id selectors
           (hash)
           (hash
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (hash)
           (hash
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -156,7 +156,7 @@ a[b] {}
           (attrib)
           (attribute_name
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)))
       (block)))
   (stylesheetItem
@@ -166,11 +166,11 @@ a[b] {}
           (attrib)
           (attribute_name
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)
           (attrib
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)))
       (block)))
   (stylesheetItem
@@ -180,11 +180,11 @@ a[b] {}
           (attrib)
           (attribute_name
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)
           (attrib
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)))
       (block)))
   (stylesheetItem
@@ -193,11 +193,11 @@ a[b] {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)
           (attribute_name
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (attrib)))
       (block))))
 
@@ -217,21 +217,21 @@ a:hover {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (pseudo)
-          (pseudo
+          (pseudo_name
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (rule_set
       (selectors
         (simpleSelector
           (pseudo)
-          (pseudo
+          (pseudo_name
             (cssLiteral
-              (identifier)
-              (identifier)))
+              (identifierCss)
+              (identifierCss)))
           (pseudo)
           (pseudo)
           (pseudo)))
@@ -252,13 +252,13 @@ a::first-line {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (pseudo)
-          (pseudo
+          (pseudo_name
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -277,12 +277,12 @@ c > d > e {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (combinator)
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (rule_set
@@ -290,17 +290,17 @@ c > d > e {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (combinator)
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (combinator)
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -319,9 +319,9 @@ c d e {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (rule_set
@@ -329,11 +329,11 @@ c d e {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier))
+              (identifierCss))
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -355,7 +355,7 @@ a {
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block
         (rule_set
           (selectors
@@ -364,7 +364,7 @@ a {
               (cssClass)
               (cssClass
                 (cssLiteral
-                  (identifier)))))
+                  (identifierCss)))))
           (block))
         (rule_set
           (selectors
@@ -373,7 +373,7 @@ a {
             (simpleSelector
               (elementName
                 (cssLiteral
-                  (identifier)))))
+                  (identifierCss)))))
           (block))
         (rule_set
           (selectors
@@ -383,7 +383,7 @@ a {
             (simpleSelector
               (elementName
                 (cssLiteral
-                  (identifier)))))
+                  (identifierCss)))))
           (block))))))
 
 ================================================================================
@@ -402,20 +402,20 @@ a.b ~ c.d {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (combinator)
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block)))
   (stylesheetItem
     (rule_set
@@ -424,21 +424,21 @@ a.b ~ c.d {}
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier))))
+              (identifierCss))))
         (combinator)
         (simpleSelector
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier)))))
+              (identifierCss)))))
       (block))))
 
 ================================================================================
@@ -457,15 +457,15 @@ a:not(:hover) {}
         (simpleSelector
           (elementName
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
+          (pseudo)
+          (pseudo_name
+            (cssLiteral
+              (identifierCss)))
           (pseudo)
           (pseudo
             (cssLiteral
-              (identifier)))
-          (pseudo)
-          (pseudo
-            (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (pseudo)))
       (block)))
   (stylesheetItem
@@ -475,16 +475,16 @@ a:not(:hover) {}
           (cssClass)
           (cssClass
             (cssLiteral
-              (identifier)))
+              (identifierCss)))
+          (pseudo)
+          (pseudo_name
+            (cssLiteral
+              (identifierCss)))
           (pseudo)
           (pseudo
             (cssLiteral
-              (identifier)))
-          (pseudo)
-          (pseudo
+              (identifierCss))
             (cssLiteral
-              (identifier))
-            (cssLiteral
-              (identifier)))
+              (identifierCss)))
           (pseudo)))
       (block))))
