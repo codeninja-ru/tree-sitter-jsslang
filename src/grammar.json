@@ -6611,6 +6611,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "page_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "at_rule"
         }
       ]
@@ -7254,6 +7258,10 @@
           {
             "type": "STRING",
             "value": "/"
+          },
+          {
+            "type": "STRING",
+            "value": "\\"
           },
           {
             "type": "STRING",
@@ -8241,6 +8249,112 @@
               "name": "block"
             }
           ]
+        }
+      ]
+    },
+    "pseudo_page": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "cssLiteral"
+        }
+      ]
+    },
+    "_page_selector": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "cssLiteral"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "pseudo_page"
+          }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "cssLiteral"
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "pseudo_page"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "pageSelectorList": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_page_selector"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_page_selector"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "page_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@page"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "pageSelectorList"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "jssDeclaration"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

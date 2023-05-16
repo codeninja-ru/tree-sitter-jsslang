@@ -3127,6 +3127,44 @@
     }
   },
   {
+    "type": "pageSelectorList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
+          "named": true
+        },
+        {
+          "type": "pseudo_page",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "page_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "jssDeclaration",
+          "named": true
+        },
+        {
+          "type": "pageSelectorList",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "pair",
     "named": true,
     "fields": {
@@ -3308,6 +3346,21 @@
         },
         {
           "type": "template_substitution",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pseudo_page",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cssLiteral",
           "named": true
         }
       ]
@@ -3617,6 +3670,10 @@
         },
         {
           "type": "namespace_statement",
+          "named": true
+        },
+        {
+          "type": "page_statement",
           "named": true
         },
         {
@@ -4442,11 +4499,19 @@
     "named": false
   },
   {
+    "type": "@page",
+    "named": false
+  },
+  {
     "type": "@supports",
     "named": false
   },
   {
     "type": "[",
+    "named": false
+  },
+  {
+    "type": "\\",
     "named": false
   },
   {

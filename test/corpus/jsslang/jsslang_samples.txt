@@ -965,3 +965,122 @@ Comments
   (comment)
   (comment)
   (comment))
+
+================================================================================
+@page
+================================================================================
+@page {
+  size: 8.5in 9in;
+  margin-top: 4in;
+}
+
+/* Targets all even-numbered pages */
+@page :left {
+  margin-top: 4in;
+}
+
+/* Targets all odd-numbered pages */
+@page :right {
+  size: 11in;
+  margin-top: 4in;
+}
+
+/* Targets all selectors with `page: wide;` set */
+@page wide {
+  size: a4 landscape;
+}
+--------------------------------------------------------------------------------
+
+(program
+  (stylesheetItem
+    (page_statement
+      (jssDeclaration
+        (jssPropertyDefinition
+          (jssPropertyName
+            (property_identifier
+              (cssLiteral
+                (identifierCss))))
+          (jssPropertyValue
+            (number)
+            (cssLiteral
+              (identifierCss))
+            (number)
+            (cssLiteral
+              (identifierCss)))))
+      (jssDeclaration
+        (jssPropertyDefinition
+          (jssPropertyName
+            (property_identifier
+              (cssLiteral
+                (identifierCss))
+              (cssLiteral
+                (identifierCss))))
+          (jssPropertyValue
+            (number)
+            (cssLiteral
+              (identifierCss)))))))
+  (comment)
+  (stylesheetItem
+    (page_statement
+      (pageSelectorList
+        (pseudo_page
+          (cssLiteral
+            (identifierCss))))
+      (jssDeclaration
+        (jssPropertyDefinition
+          (jssPropertyName
+            (property_identifier
+              (cssLiteral
+                (identifierCss))
+              (cssLiteral
+                (identifierCss))))
+          (jssPropertyValue
+            (number)
+            (cssLiteral
+              (identifierCss)))))))
+  (comment)
+  (stylesheetItem
+    (page_statement
+      (pageSelectorList
+        (pseudo_page
+          (cssLiteral
+            (identifierCss))))
+      (jssDeclaration
+        (jssPropertyDefinition
+          (jssPropertyName
+            (property_identifier
+              (cssLiteral
+                (identifierCss))))
+          (jssPropertyValue
+            (number)
+            (cssLiteral
+              (identifierCss)))))
+      (jssDeclaration
+        (jssPropertyDefinition
+          (jssPropertyName
+            (property_identifier
+              (cssLiteral
+                (identifierCss))
+              (cssLiteral
+                (identifierCss))))
+          (jssPropertyValue
+            (number)
+            (cssLiteral
+              (identifierCss)))))))
+  (comment)
+  (stylesheetItem
+    (page_statement
+      (pageSelectorList
+        (cssLiteral
+          (identifierCss)))
+      (jssDeclaration
+        (jssPropertyDefinition
+          (jssPropertyName
+            (property_identifier
+              (cssLiteral
+                (identifierCss))))
+          (jssPropertyValue
+            (cssLiteral
+              (identifierCss))
+            (cssLiteral
+              (identifierCss))))))))

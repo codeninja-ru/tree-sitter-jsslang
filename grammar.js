@@ -133,6 +133,7 @@ module.exports = grammar({
       $.namespace_statement,
       $.keyframes_statement,
       $.supports_statement,
+      $.page_statement,
       $.at_rule
     ),
 
@@ -282,8 +283,8 @@ module.exports = grammar({
         $.number,
         $.string,
         $.uri,
-        seq('(', $.jssPropertyValue , ')'), //TODO expend on what is inside of ()
-        '+', '-', '*', '!', '/', '.', '#', '%', ',', ':', '?', '&'
+        seq('(', $.jssPropertyValue , ')'),
+        '+', '-', '*', '!', '/', '\\', '.', '#', '%', ',', ':', '?', '&'
       )
     ),
 
@@ -489,6 +490,32 @@ module.exports = grammar({
         alias($.media_query_list, $.query_list),
       ),
       choice(';', $.block)
+    ),
+
+    pseudo_page: $ => seq(
+      ':',
+      $.cssLiteral,
+    ),
+
+    _page_selector: $ => choice(
+      $.cssLiteral,
+      repeat1($.pseudo_page),
+      seq(
+        $.cssLiteral,
+        repeat1($.pseudo_page),
+      )
+    ),
+
+    pageSelectorList: $ => sep1(',', $._page_selector),
+
+    page_statement: $ => seq(
+      '@page',
+      optional($.pageSelectorList),
+      '{',
+      repeat(
+        $.jssDeclaration,
+      ),
+      '}'
     ),
 
     // Media queries
